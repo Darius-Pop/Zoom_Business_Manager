@@ -5,482 +5,225 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Înregistrare — Zoom Design</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     :root {
-      --navy:       #0e1c35;
-      --navy-mid:   #162540;
-      --navy-light: #1d3058;
-      --gold:       #c8a84b;
-      --gold-light: #e2c46e;
-      --gold-pale:  rgba(200,168,75,0.13);
-      --white:      #ffffff;
-      --offwhite:   #f5f6f9;
-      --slate-200:  #e4e8f0;
-      --slate-300:  #cdd4e0;
-      --slate-400:  #9aaabf;
-      --slate-500:  #677a96;
-      --slate-600:  #445068;
-      --slate-700:  #2b3a52;
-      --danger:     #c0392b;
-      --success:    #1a7a4a;
+      --black:       #080c08;
+      --dark:        #0d120d;
+      --dark-card:   #151d15;
+      --green:       #2d8a2d;
+      --green-mid:   #3aaa3a;
+      --green-light: #4dc94d;
+      --green-pale:  rgba(45,138,45,0.13);
+      --green-glow:  rgba(45,138,45,0.3);
+      --white:       #ffffff;
+      --slate-300:   #a8b8a8;
+      --slate-400:   #7a927a;
+      --slate-500:   #556655;
+      --danger:      #c0392b;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
+    body { font-family: 'Mulish', sans-serif; background: var(--black); min-height: 100vh; display: flex; align-items: stretch; }
 
-    body {
-      font-family: 'Mulish', sans-serif;
-      background: var(--navy);
-      min-height: 100vh;
-      display: flex;
-      align-items: stretch;
-    }
-
-    /* ── Left panel ─────────────────────────── */
     .left-panel {
-      flex: 1;
-      background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 60%, #1a3a6e 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 60px;
-      position: relative;
-      overflow: hidden;
+      flex: 1; background: linear-gradient(145deg, #080c08 0%, #0d1a0d 50%, #0f2010 100%);
+      border-right: 1px solid rgba(45,138,45,0.2);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 60px; position: relative; overflow: hidden;
     }
-    .left-panel::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(200,168,75,0.15) 0%, transparent 65%);
-    }
-    .left-panel::after {
-      content: '';
-      position: absolute;
-      bottom: -120px; left: -60px;
-      width: 360px; height: 360px;
-      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 65%);
-    }
-    .deco-lines {
-      position: absolute; inset: 0;
-      pointer-events: none; opacity: 0.05;
-    }
+    .left-panel::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(45,138,45,0.15) 0%, transparent 65%); }
+    .deco { position: absolute; inset: 0; pointer-events: none; opacity: 0.06; }
     .left-content { position: relative; z-index: 1; }
 
-    .brand {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 60px;
-    }
-    .brand-mark {
-      width: 42px; height: 42px; background: var(--gold);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-    }
-    .brand-mark svg { width: 22px; height: 22px; fill: var(--navy); }
-    .brand-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px; font-weight: 700; color: var(--white);
-    }
-    .brand-name span { color: var(--gold); }
+    .logo-wrap { margin-bottom: 52px; }
+    .logo-box { display: inline-flex; flex-direction: column; align-items: center; padding: 10px 24px; position: relative; }
+    .logo-box::before, .logo-box::after { content: ''; position: absolute; width: 16px; height: 16px; border-color: var(--green-mid); border-style: solid; }
+    .logo-box::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+    .logo-box::after  { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+    .logo-name { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: linear-gradient(135deg, var(--green-mid), var(--green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate-300); display: flex; align-items: center; gap: 8px; }
+    .logo-tagline::before, .logo-tagline::after { content: ''; width: 18px; height: 1px; background: var(--green-mid); }
 
-    .left-eyebrow {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 16px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .left-eyebrow::before {
-      content: ''; width: 24px; height: 2px;
-      background: var(--gold); border-radius: 2px;
-    }
-    .left-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 42px; font-weight: 700;
-      color: var(--white); line-height: 1.15; margin-bottom: 20px;
-    }
-    .left-title span { color: var(--gold-light); }
-    .left-desc {
-      font-size: 14px; color: rgba(255,255,255,0.45);
-      line-height: 1.7; max-width: 380px; margin-bottom: 48px;
-    }
-    .steps-list { display: flex; flex-direction: column; gap: 18px; }
-    .step-item {
-      display: flex; align-items: flex-start; gap: 14px;
-    }
-    .step-num {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(200,168,75,0.15);
-      border: 1px solid rgba(200,168,75,0.3);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 800; color: var(--gold);
-      flex-shrink: 0; margin-top: 1px;
-    }
-    .step-text strong {
-      display: block; font-size: 13.5px; font-weight: 700;
-      color: rgba(255,255,255,0.75); margin-bottom: 2px;
-    }
-    .step-text span {
-      font-size: 12px; color: rgba(255,255,255,0.38);
-    }
+    .left-eyebrow { font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .left-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--green-mid); border-radius: 2px; }
+    .left-title { font-family: 'Rajdhani', sans-serif; font-size: 44px; font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.02em; }
+    .left-title span { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .left-desc { font-size: 14px; color: var(--slate-400); line-height: 1.7; max-width: 380px; margin-bottom: 44px; }
 
-    /* ── Right panel ────────────────────────── */
-    .right-panel {
-      width: 520px;
-      background: var(--offwhite);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 48px;
-      overflow-y: auto;
-    }
+    .steps { display: flex; flex-direction: column; gap: 18px; }
+    .step { display: flex; align-items: flex-start; gap: 14px; }
+    .step-num { width: 30px; height: 30px; border-radius: 50%; background: rgba(45,138,45,0.15); border: 1px solid rgba(45,138,45,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 800; color: var(--green-mid); flex-shrink: 0; }
+    .step strong { display: block; font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
+    .step span { font-size: 12px; color: var(--slate-400); }
 
-    .form-header { margin-bottom: 28px; }
-    .form-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 30px; font-weight: 700;
-      color: var(--navy); line-height: 1.2; margin-bottom: 8px;
-    }
-    .form-subtitle {
-      font-size: 13.5px; color: var(--slate-400); font-weight: 500;
-    }
-    .form-subtitle a {
-      color: var(--navy); font-weight: 700; text-decoration: none;
-      border-bottom: 1px solid var(--gold); transition: color 0.15s;
-    }
-    .form-subtitle a:hover { color: var(--gold); }
+    /* Right */
+    .right-panel { width: 500px; background: var(--dark); display: flex; flex-direction: column; justify-content: center; padding: 44px; overflow-y: auto; }
+    .form-header { margin-bottom: 26px; }
+    .form-title { font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 700; color: var(--white); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
+    .form-subtitle { font-size: 14px; color: var(--slate-400); }
+    .form-subtitle a { color: var(--green-light); font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(45,138,45,0.4); transition: color 0.15s; }
+    .form-subtitle a:hover { color: var(--white); }
 
-    /* Alerts */
-    .alert {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 11px 14px; border-radius: 8px;
-      font-size: 13px; font-weight: 500;
-      margin-bottom: 20px; border: 1px solid;
-      border-left-width: 4px;
-    }
+    .alert { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; margin-bottom: 18px; border: 1px solid; border-left-width: 4px; }
     .alert i { margin-top: 1px; flex-shrink: 0; }
-    .alert ul { margin: 6px 0 0 4px; padding-left: 16px; }
+    .alert ul { margin: 5px 0 0 4px; padding-left: 14px; }
     .alert ul li { margin-bottom: 2px; }
-    .alert-danger  { background:#fdf3f2; border-color:#f0b4ae; border-left-color:var(--danger); color:#922019; }
-    .alert-success { background:#f0faf5; border-color:#a3d9be; border-left-color:var(--success); color:#145c38; }
+    .alert-danger { background:rgba(192,57,43,0.1); border-color:rgba(192,57,43,0.3); border-left-color:var(--danger); color:#e87d72; }
+    .alert-success { background:rgba(45,138,45,0.1); border-color:rgba(45,138,45,0.3); border-left-color:var(--green-mid); color:var(--green-light); }
 
-    /* Two-column row */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .form-group { margin-bottom: 16px; }
-    .form-label {
-      display: block; font-size: 11.5px; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--slate-600); margin-bottom: 6px;
-    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 15px; }
+    .form-label { display: block; font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 6px; }
     .input-wrap { position: relative; }
-    .input-icon {
-      position: absolute; left: 13px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--slate-400); font-size: 13px; pointer-events: none;
-    }
-    .form-input {
-      width: 100%;
-      background: var(--white);
-      border: 1.5px solid var(--slate-200);
-      border-radius: 8px;
-      padding: 10px 13px 10px 38px;
-      font-size: 13.5px;
-      font-family: 'Mulish', sans-serif;
-      color: var(--slate-700);
-      outline: none;
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
-    .form-input::placeholder { color: var(--slate-400); }
-    .form-input:focus {
-      border-color: var(--navy);
-      box-shadow: 0 0 0 3px rgba(14,28,53,0.08);
-    }
-    .form-input.error { border-color: var(--danger); }
+    .input-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--slate-500); font-size: 13px; pointer-events: none; }
+    .form-input { width: 100%; background: var(--dark-card); border: 1.5px solid rgba(45,138,45,0.2); border-radius: 8px; padding: 10px 13px 10px 38px; font-size: 13.5px; font-family: 'Mulish', sans-serif; color: var(--white); outline: none; transition: border-color 0.18s, box-shadow 0.18s; }
+    .form-input::placeholder { color: var(--slate-500); }
+    .form-input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px var(--green-pale); }
+    .toggle-pass { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--slate-500); font-size: 13px; cursor: pointer; background: none; border: none; transition: color 0.15s; }
+    .toggle-pass:hover { color: var(--green-light); }
 
-    .toggle-pass {
-      position: absolute; right: 12px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--slate-400); font-size: 13px;
-      cursor: pointer; background: none; border: none;
-      transition: color 0.15s;
-    }
-    .toggle-pass:hover { color: var(--navy); }
+    .pass-strength { margin-top: 5px; }
+    .strength-bar { height: 4px; border-radius: 99px; background: rgba(45,138,45,0.15); overflow: hidden; margin-bottom: 3px; }
+    .strength-fill { height: 100%; border-radius: 99px; width: 0%; transition: width 0.3s, background 0.3s; }
+    .strength-text { font-size: 11px; color: var(--slate-500); font-weight: 600; }
 
-    /* Password strength */
-    .pass-strength { margin-top: 6px; }
-    .strength-bar {
-      height: 4px; border-radius: 99px;
-      background: var(--slate-200); overflow: hidden; margin-bottom: 4px;
-    }
-    .strength-fill {
-      height: 100%; border-radius: 99px;
-      width: 0%; transition: width 0.3s, background 0.3s;
-    }
-    .strength-text { font-size: 11px; color: var(--slate-400); font-weight: 600; }
+    .terms-label { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: var(--slate-400); margin-bottom: 18px; line-height: 1.5; cursor: pointer; }
+    .terms-label input { margin-top: 2px; flex-shrink: 0; width: 14px; height: 14px; accent-color: var(--green-mid); cursor: pointer; }
+    .terms-label a { color: var(--green-light); font-weight: 700; border-bottom: 1px solid rgba(45,138,45,0.4); text-decoration: none; }
 
-    .terms-label {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 12.5px; color: var(--slate-500);
-      margin-bottom: 20px; line-height: 1.5; cursor: pointer;
-    }
-    .terms-label input {
-      margin-top: 2px; flex-shrink: 0;
-      width: 15px; height: 15px; accent-color: var(--navy); cursor: pointer;
-    }
-    .terms-label a {
-      color: var(--navy); font-weight: 700;
-      border-bottom: 1px solid var(--gold); text-decoration: none;
-    }
+    .btn-submit { width: 100%; background: var(--green); color: var(--white); border: 1px solid var(--green-mid); border-radius: 8px; padding: 13px; font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.18s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-submit:hover { background: var(--green-mid); box-shadow: 0 0 24px var(--green-glow); transform: translateY(-1px); }
 
-    .btn-submit {
-      width: 100%; background: var(--navy); color: var(--white);
-      border: none; border-radius: 8px; padding: 13px;
-      font-family: 'Mulish', sans-serif; font-size: 14px; font-weight: 700;
-      cursor: pointer; letter-spacing: 0.03em;
-      transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-submit:hover {
-      background: var(--navy-light);
-      box-shadow: 0 6px 20px rgba(14,28,53,0.2);
-      transform: translateY(-1px);
-    }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: rgba(45,138,45,0.3); font-size: 12px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(45,138,45,0.15); }
 
-    .divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 20px 0; color: var(--slate-300); font-size: 12px;
-    }
-    .divider::before, .divider::after {
-      content: ''; flex: 1; height: 1px; background: var(--slate-200);
-    }
+    .form-footer { margin-top: 20px; text-align: center; font-size: 12px; color: var(--slate-500); }
 
-    .form-footer {
-      margin-top: 24px; text-align: center;
-      font-size: 12px; color: var(--slate-400);
-    }
-
-    @media (max-width: 960px) {
-      .left-panel { display: none; }
-      .right-panel { width: 100%; padding: 36px 24px; }
-      .form-row { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 960px) { .left-panel { display: none; } .right-panel { width: 100%; padding: 36px 24px; } .form-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-  <!-- Left panel -->
   <div class="left-panel">
-    <svg class="deco-lines" viewBox="0 0 600 800" preserveAspectRatio="none">
+    <svg class="deco" viewBox="0 0 600 800" preserveAspectRatio="none">
       <line x1="0" y1="0" x2="600" y2="800" stroke="white" stroke-width="1"/>
       <line x1="100" y1="0" x2="600" y2="700" stroke="white" stroke-width="0.8"/>
-      <line x1="200" y1="0" x2="600" y2="600" stroke="white" stroke-width="0.6"/>
-      <circle cx="480" cy="200" r="120" stroke="white" stroke-width="0.8" fill="none"/>
-      <circle cx="480" cy="200" r="200" stroke="white" stroke-width="0.4" fill="none"/>
-      <circle cx="80" cy="620" r="90" stroke="white" stroke-width="0.6" fill="none"/>
+      <circle cx="480" cy="200" r="140" stroke="white" stroke-width="0.8" fill="none"/>
+      <circle cx="480" cy="200" r="220" stroke="white" stroke-width="0.4" fill="none"/>
     </svg>
-
     <div class="left-content">
-      <div class="brand">
-        <div class="brand-mark">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <div class="logo-wrap">
+        <div class="logo-box">
+          <div class="logo-name">Zoom Design</div>
+          <div class="logo-tagline">Mobilă la Comandă</div>
         </div>
-        <div class="brand-name">Zoom <span>Design</span></div>
       </div>
-
       <div class="left-eyebrow">Creare cont nou</div>
-      <h1 class="left-title">
-        Începe să<br>gestionezi <span>eficient</span>
-      </h1>
-      <p class="left-desc">
-        Creează-ți contul în câteva secunde și ai acces imediat la toate modulele platformei Zoom Design.
-      </p>
-
-      <div class="steps-list">
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-text">
-            <strong>Completează formularul</strong>
-            <span>Datele tale de identificare</span>
-          </div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-text">
-            <strong>Accesezi imediat platforma</strong>
-            <span>Fără pași suplimentari</span>
-          </div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-text">
-            <strong>Gestionezi totul din un loc</strong>
-            <span>Angajați, comenzi, clienți, oferte</span>
-          </div>
-        </div>
+      <h1 class="left-title">Începe să<br>gestionezi <span>eficient</span></h1>
+      <p class="left-desc">Creează-ți contul în câteva secunde și ai acces imediat la toate modulele platformei.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><strong>Completează formularul</strong><span>Datele tale de identificare</span></div></div>
+        <div class="step"><div class="step-num">2</div><div><strong>Accesezi imediat platforma</strong><span>Fără pași suplimentari</span></div></div>
+        <div class="step"><div class="step-num">3</div><div><strong>Gestionezi totul din un loc</strong><span>Angajați, comenzi, clienți, oferte</span></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Right form panel -->
   <div class="right-panel">
-
     <div class="form-header">
-      <div class="form-title">Cont nou 🚀</div>
-      <div class="form-subtitle">
-        Ai deja cont?
-        <a href="{% url 'login' %}">Autentifică-te</a>
-      </div>
+      <div class="form-title">Cont nou</div>
+      <div class="form-subtitle">Ai deja cont? <a href="{% url 'login' %}">Autentifică-te</a></div>
     </div>
 
     {% if form.errors %}
     <div class="alert alert-danger">
       <i class="fa-solid fa-circle-xmark"></i>
-      <div>
-        Te rugăm corectează erorile de mai jos:
-        <ul>
-          {% for field in form %}
-            {% for error in field.errors %}
-              <li>{{ field.label }}: {{ error }}</li>
-            {% endfor %}
-          {% endfor %}
-          {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </div>
+      <div>Corectează erorile:<ul>{% for field in form %}{% for error in field.errors %}<li>{{ field.label }}: {{ error }}</li>{% endfor %}{% endfor %}{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul></div>
     </div>
     {% endif %}
+    {% if messages %}{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}"><i class="fa-solid fa-circle-info"></i> {{ message }}</div>
+    {% endfor %}{% endif %}
 
     <form method="POST" action="{% url 'register' %}">
       {% csrf_token %}
-
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="first_name">Prenume</label>
-          <div class="input-wrap">
-            <i class="input-icon fa-solid fa-user"></i>
-            <input class="form-input" type="text" id="first_name" name="first_name"
-              placeholder="Ion" value="{{ form.first_name.value|default:'' }}" required/>
-          </div>
+          <label class="form-label">Prenume</label>
+          <div class="input-wrap"><i class="input-icon fa-solid fa-user"></i><input class="form-input" type="text" name="first_name" placeholder="Ion" value="{{ form.first_name|default:'' }}" required/></div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="last_name">Nume</label>
-          <div class="input-wrap">
-            <i class="input-icon fa-solid fa-user"></i>
-            <input class="form-input" type="text" id="last_name" name="last_name"
-              placeholder="Popescu" value="{{ form.last_name.value|default:'' }}" required/>
-          </div>
+          <label class="form-label">Nume</label>
+          <div class="input-wrap"><i class="input-icon fa-solid fa-user"></i><input class="form-input" type="text" name="last_name" placeholder="Popescu" value="{{ form.last_name|default:'' }}" required/></div>
         </div>
       </div>
-
       <div class="form-group">
-        <label class="form-label" for="username">Nume utilizator</label>
-        <div class="input-wrap">
-          <i class="input-icon fa-solid fa-at"></i>
-          <input class="form-input" type="text" id="username" name="username"
-            placeholder="ion.popescu" value="{{ form.username.value|default:'' }}"
-            autocomplete="username" required/>
-        </div>
+        <label class="form-label">Utilizator</label>
+        <div class="input-wrap"><i class="input-icon fa-solid fa-at"></i><input class="form-input" type="text" name="username" placeholder="ion.popescu" value="{{ form.username|default:'' }}" required/></div>
       </div>
-
       <div class="form-group">
-        <label class="form-label" for="email">Email</label>
-        <div class="input-wrap">
-          <i class="input-icon fa-solid fa-envelope"></i>
-          <input class="form-input" type="email" id="email" name="email"
-            placeholder="ion.popescu@company.ro"
-            value="{{ form.email.value|default:'' }}" required/>
-        </div>
+        <label class="form-label">Email</label>
+        <div class="input-wrap"><i class="input-icon fa-solid fa-envelope"></i><input class="form-input" type="email" name="email" placeholder="ion@company.ro" value="{{ form.email|default:'' }}" required/></div>
       </div>
-
       <div class="form-group">
-        <label class="form-label" for="password1">Parolă</label>
+        <label class="form-label">Parolă</label>
         <div class="input-wrap">
           <i class="input-icon fa-solid fa-lock"></i>
-          <input class="form-input" type="password" id="password1" name="password1"
-            placeholder="Minim 8 caractere" autocomplete="new-password"
-            oninput="checkStrength(this.value)" required/>
-          <button type="button" class="toggle-pass" onclick="togglePass('password1', this)">
-            <i class="fa-regular fa-eye"></i>
-          </button>
+          <input class="form-input" type="password" id="password1" name="password1" placeholder="Minim 8 caractere" oninput="checkStrength(this.value)" required/>
+          <button type="button" class="toggle-pass" onclick="togglePass('password1',this)"><i class="fa-regular fa-eye"></i></button>
         </div>
         <div class="pass-strength">
-          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-          <div class="strength-text" id="strengthText">Introdu parola</div>
+          <div class="strength-bar"><div class="strength-fill" id="sFill"></div></div>
+          <div class="strength-text" id="sText">Introdu parola</div>
         </div>
       </div>
-
       <div class="form-group">
-        <label class="form-label" for="password2">Confirmă parola</label>
+        <label class="form-label">Confirmă parola</label>
         <div class="input-wrap">
           <i class="input-icon fa-solid fa-lock"></i>
-          <input class="form-input" type="password" id="password2" name="password2"
-            placeholder="Repetă parola" autocomplete="new-password" required/>
-          <button type="button" class="toggle-pass" onclick="togglePass('password2', this)">
-            <i class="fa-regular fa-eye"></i>
-          </button>
+          <input class="form-input" type="password" id="password2" name="password2" placeholder="Repetă parola" required/>
+          <button type="button" class="toggle-pass" onclick="togglePass('password2',this)"><i class="fa-regular fa-eye"></i></button>
         </div>
       </div>
-
       <label class="terms-label">
         <input type="checkbox" name="terms" required/>
-        Sunt de acord cu <a href="#">Termenii și Condițiile</a> și
-        <a href="#">Politica de Confidențialitate</a>
+        Sunt de acord cu <a href="#">Termenii și Condițiile</a>
       </label>
-
-      <button type="submit" class="btn-submit">
-        <i class="fa-solid fa-user-plus"></i>
-        Creează cont
-      </button>
-
+      <button type="submit" class="btn-submit"><i class="fa-solid fa-user-plus"></i> Creează cont</button>
     </form>
 
     <div class="divider">sau</div>
-    <div style="text-align:center;">
-      <a href="{% url 'login' %}" style="font-size:13.5px; font-weight:600; color:var(--slate-500); border-bottom:1px solid var(--slate-300); text-decoration:none;">
-        Înapoi la autentificare
-      </a>
-    </div>
-
-    <div class="form-footer">
-      &copy; {% now "Y" %} Zoom Design. Toate drepturile rezervate.
-    </div>
+    <div style="text-align:center;"><a href="{% url 'login' %}" style="font-size:13.5px; font-weight:600; color:var(--slate-400); text-decoration:none; border-bottom:1px solid rgba(45,138,45,0.3);">Înapoi la autentificare</a></div>
+    <div class="form-footer">&copy; {% now "Y" %} Zoom Design — Mobilă la Comandă</div>
   </div>
 
   <script>
-    function togglePass(fieldId, btn) {
-      const input = document.getElementById(fieldId);
-      const icon = btn.querySelector('i');
-      input.type = input.type === 'password' ? 'text' : 'password';
-      icon.className = input.type === 'password' ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash';
+    function togglePass(id, btn) {
+      const inp = document.getElementById(id);
+      const ic = btn.querySelector('i');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      ic.className = inp.type === 'password' ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash';
     }
-
     function checkStrength(val) {
-      const fill = document.getElementById('strengthFill');
-      const text = document.getElementById('strengthText');
-      let score = 0;
-      if (val.length >= 8)  score++;
-      if (/[A-Z]/.test(val)) score++;
-      if (/[0-9]/.test(val)) score++;
-      if (/[^A-Za-z0-9]/.test(val)) score++;
-
-      const levels = [
-        { w: '0%',   bg: '#e4e8f0', label: 'Introdu parola' },
-        { w: '25%',  bg: '#c0392b', label: 'Slabă' },
-        { w: '50%',  bg: '#b8860b', label: 'Acceptabilă' },
-        { w: '75%',  bg: '#2196a3', label: 'Bună' },
-        { w: '100%', bg: '#1a7a4a', label: 'Foarte puternică' },
+      let s = 0;
+      if (val.length >= 8) s++;
+      if (/[A-Z]/.test(val)) s++;
+      if (/[0-9]/.test(val)) s++;
+      if (/[^A-Za-z0-9]/.test(val)) s++;
+      const lvl = [
+        {w:'0%',   bg:'transparent', l:'Introdu parola'},
+        {w:'25%',  bg:'#c0392b',     l:'Slabă'},
+        {w:'50%',  bg:'#c8820a',     l:'Acceptabilă'},
+        {w:'75%',  bg:'#2196a3',     l:'Bună'},
+        {w:'100%', bg:'#3aaa3a',     l:'Foarte puternică'},
       ];
-      fill.style.width = levels[score].w;
-      fill.style.background = levels[score].bg;
-      text.textContent = levels[score].label;
-      text.style.color = levels[score].bg;
+      document.getElementById('sFill').style.width = lvl[s].w;
+      document.getElementById('sFill').style.background = lvl[s].bg;
+      document.getElementById('sText').textContent = lvl[s].l;
+      document.getElementById('sText').style.color = lvl[s].bg;
     }
   </script>
 </body>

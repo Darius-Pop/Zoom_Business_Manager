@@ -5,417 +5,258 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Autentificare — Zoom Design</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     :root {
-      --navy:       #0e1c35;
-      --navy-mid:   #162540;
-      --navy-light: #1d3058;
-      --gold:       #c8a84b;
-      --gold-light: #e2c46e;
-      --gold-pale:  rgba(200,168,75,0.13);
-      --white:      #ffffff;
-      --offwhite:   #f5f6f9;
-      --slate-200:  #e4e8f0;
-      --slate-300:  #cdd4e0;
-      --slate-400:  #9aaabf;
-      --slate-500:  #677a96;
-      --slate-600:  #445068;
-      --slate-700:  #2b3a52;
-      --danger:     #c0392b;
-      --success:    #1a7a4a;
+      --black:       #080c08;
+      --dark:        #0d120d;
+      --dark-mid:    #111811;
+      --dark-card:   #151d15;
+      --green:       #2d8a2d;
+      --green-mid:   #3aaa3a;
+      --green-light: #4dc94d;
+      --green-pale:  rgba(45,138,45,0.13);
+      --green-glow:  rgba(45,138,45,0.3);
+      --white:       #ffffff;
+      --slate-100:   #e8ede8;
+      --slate-200:   #d0d8d0;
+      --slate-300:   #a8b8a8;
+      --slate-400:   #7a927a;
+      --slate-500:   #556655;
+      --slate-700:   #243024;
+      --danger:      #c0392b;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-
     body {
       font-family: 'Mulish', sans-serif;
-      background: var(--navy);
+      background: var(--black);
       min-height: 100vh;
-      display: flex;
-      align-items: stretch;
+      display: flex; align-items: stretch;
     }
 
-    /* ── Left panel ─────────────────────────── */
+    /* Left panel */
     .left-panel {
       flex: 1;
-      background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 60%, #1a3a6e 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 60px;
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(145deg, #080c08 0%, #0d1a0d 50%, #0f2010 100%);
+      border-right: 1px solid rgba(45,138,45,0.2);
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 60px;
+      position: relative; overflow: hidden;
     }
     .left-panel::before {
-      content: '';
-      position: absolute;
+      content: ''; position: absolute;
       top: -100px; right: -100px;
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(200,168,75,0.15) 0%, transparent 65%);
-      pointer-events: none;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(45,138,45,0.15) 0%, transparent 65%);
     }
-    .left-panel::after {
-      content: '';
-      position: absolute;
-      bottom: -120px; left: -60px;
-      width: 360px; height: 360px;
-      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    /* Decorative lines */
-    .deco-lines {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.05;
-    }
-
+    .deco { position: absolute; inset: 0; pointer-events: none; opacity: 0.06; }
     .left-content { position: relative; z-index: 1; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 60px;
-    }
-    .brand-mark {
-      width: 42px; height: 42px;
-      background: var(--gold);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .brand-mark svg { width: 22px; height: 22px; fill: var(--navy); }
-    .brand-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px; font-weight: 700;
-      color: var(--white);
-    }
-    .brand-name span { color: var(--gold); }
-
-    .left-eyebrow {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 16px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .left-eyebrow::before {
-      content: '';
-      width: 24px; height: 2px;
-      background: var(--gold); border-radius: 2px;
-    }
-    .left-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 42px; font-weight: 700;
-      color: var(--white); line-height: 1.15;
-      margin-bottom: 20px;
-    }
-    .left-title span { color: var(--gold-light); }
-    .left-desc {
-      font-size: 14px; color: rgba(255,255,255,0.45);
-      line-height: 1.7; max-width: 380px; margin-bottom: 48px;
-    }
-
-    .feature-list { display: flex; flex-direction: column; gap: 14px; }
-    .feature-item {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 13.5px; color: rgba(255,255,255,0.6); font-weight: 500;
-    }
-    .feature-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: rgba(200,168,75,0.15);
-      border: 1px solid rgba(200,168,75,0.25);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; color: var(--gold); flex-shrink: 0;
-    }
-
-    /* ── Right panel (form) ─────────────────── */
-    .right-panel {
-      width: 480px;
-      background: var(--offwhite);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 60px 48px;
+    /* Logo */
+    .logo-wrap { margin-bottom: 56px; }
+    .logo-box {
+      display: inline-flex; flex-direction: column;
+      align-items: center; padding: 10px 24px;
       position: relative;
     }
+    .logo-box::before, .logo-box::after { content: ''; position: absolute; width: 16px; height: 16px; border-color: var(--green-mid); border-style: solid; }
+    .logo-box::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+    .logo-box::after  { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+    .logo-name {
+      font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .logo-tagline {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--slate-300); display: flex; align-items: center; gap: 8px;
+    }
+    .logo-tagline::before, .logo-tagline::after { content: ''; width: 18px; height: 1px; background: var(--green-mid); }
 
-    .form-header { margin-bottom: 36px; }
+    .left-eyebrow {
+      font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-mid);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .left-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--green-mid); border-radius: 2px; }
+    .left-title {
+      font-family: 'Rajdhani', sans-serif; font-size: 44px; font-weight: 700;
+      color: var(--white); line-height: 1.1; margin-bottom: 18px;
+      text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .left-title span { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .left-desc { font-size: 14px; color: var(--slate-400); line-height: 1.7; max-width: 380px; margin-bottom: 44px; }
+
+    .features { display: flex; flex-direction: column; gap: 14px; }
+    .feature { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--slate-300); }
+    .feature-ic {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: rgba(45,138,45,0.12); border: 1px solid rgba(45,138,45,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--green-mid); flex-shrink: 0;
+    }
+
+    /* Right panel */
+    .right-panel {
+      width: 460px; background: var(--dark);
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 56px 44px;
+    }
+    .form-header { margin-bottom: 32px; }
     .form-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 30px; font-weight: 700;
-      color: var(--navy); line-height: 1.2; margin-bottom: 8px;
+      font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 700;
+      color: var(--white); letter-spacing: 0.04em; margin-bottom: 8px; text-transform: uppercase;
     }
-    .form-subtitle {
-      font-size: 13.5px; color: var(--slate-400); font-weight: 500;
-    }
+    .form-subtitle { font-size: 14px; color: var(--slate-400); }
     .form-subtitle a {
-      color: var(--navy); font-weight: 700; text-decoration: none;
-      border-bottom: 1px solid var(--gold);
-      transition: color 0.15s;
+      color: var(--green-light); font-weight: 700; text-decoration: none;
+      border-bottom: 1px solid rgba(45,138,45,0.4); transition: color 0.15s;
     }
-    .form-subtitle a:hover { color: var(--gold); }
+    .form-subtitle a:hover { color: var(--white); }
 
-    /* Alerts */
     .alert {
       display: flex; align-items: center; gap: 10px;
       padding: 11px 14px; border-radius: 8px;
-      font-size: 13px; font-weight: 500;
-      margin-bottom: 20px; border: 1px solid;
-      border-left-width: 4px;
+      font-size: 13px; font-weight: 500; margin-bottom: 20px;
+      border: 1px solid; border-left-width: 4px;
     }
-    .alert-danger  { background:#fdf3f2; border-color:#f0b4ae; border-left-color:var(--danger); color:#922019; }
-    .alert-success { background:#f0faf5; border-color:#a3d9be; border-left-color:var(--success); color:#145c38; }
+    .alert-danger { background:rgba(192,57,43,0.1); border-color:rgba(192,57,43,0.3); border-left-color:var(--danger); color:#e87d72; }
+    .alert-success { background:rgba(45,138,45,0.1); border-color:rgba(45,138,45,0.3); border-left-color:var(--green-mid); color:var(--green-light); }
 
-    /* Form fields */
-    .form-group { margin-bottom: 20px; }
+    .form-group { margin-bottom: 18px; }
     .form-label {
-      display: block;
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--slate-600); margin-bottom: 7px;
+      display: block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green-mid); margin-bottom: 7px;
+      font-family: 'Rajdhani', sans-serif;
     }
     .input-wrap { position: relative; }
-    .input-icon {
-      position: absolute; left: 14px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--slate-400); font-size: 14px;
-      pointer-events: none;
-    }
+    .input-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--slate-500); font-size: 14px; pointer-events: none; }
     .form-input {
-      width: 100%;
-      background: var(--white);
-      border: 1.5px solid var(--slate-200);
-      border-radius: 8px;
-      padding: 11px 14px 11px 40px;
-      font-size: 14px;
-      font-family: 'Mulish', sans-serif;
-      color: var(--slate-700);
-      outline: none;
+      width: 100%; background: var(--dark-card);
+      border: 1.5px solid rgba(45,138,45,0.2); border-radius: 8px;
+      padding: 11px 13px 11px 40px; font-size: 14px;
+      font-family: 'Mulish', sans-serif; color: var(--white); outline: none;
       transition: border-color 0.18s, box-shadow 0.18s;
     }
-    .form-input::placeholder { color: var(--slate-400); }
-    .form-input:focus {
-      border-color: var(--navy);
-      box-shadow: 0 0 0 3px rgba(14,28,53,0.08);
-    }
-    .form-input.error { border-color: var(--danger); }
+    .form-input::placeholder { color: var(--slate-500); }
+    .form-input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px var(--green-pale); }
 
     .toggle-pass {
-      position: absolute; right: 14px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--slate-400); font-size: 14px;
-      cursor: pointer; background: none; border: none;
-      transition: color 0.15s;
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--slate-500); font-size: 14px; cursor: pointer;
+      background: none; border: none; transition: color 0.15s;
     }
-    .toggle-pass:hover { color: var(--navy); }
+    .toggle-pass:hover { color: var(--green-light); }
 
     .form-row-meta {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px; margin-top: -8px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 22px; margin-top: -6px;
     }
     .remember-label {
       display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--slate-500); cursor: pointer;
-      font-weight: 500;
+      font-size: 13px; color: var(--slate-400); cursor: pointer;
     }
-    .remember-label input[type="checkbox"] {
-      width: 15px; height: 15px;
-      accent-color: var(--navy);
-      cursor: pointer;
-    }
+    .remember-label input { accent-color: var(--green-mid); width: 14px; height: 14px; }
     .forgot-link {
-      font-size: 13px; font-weight: 600;
-      color: var(--slate-500); text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
+      font-size: 13px; font-weight: 600; color: var(--slate-400); text-decoration: none;
+      transition: color 0.15s;
     }
-    .forgot-link:hover { color: var(--navy); border-bottom-color: var(--gold); }
+    .forgot-link:hover { color: var(--green-light); }
 
     .btn-submit {
-      width: 100%;
-      background: var(--navy);
-      color: var(--white);
-      border: none;
-      border-radius: 8px;
-      padding: 13px;
-      font-family: 'Mulish', sans-serif;
-      font-size: 14px; font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-      transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; background: var(--green); color: var(--white);
+      border: 1px solid var(--green-mid); border-radius: 8px; padding: 13px;
+      font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700;
+      cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: all 0.18s; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .btn-submit:hover {
-      background: var(--navy-light);
-      box-shadow: 0 6px 20px rgba(14,28,53,0.2);
-      transform: translateY(-1px);
-    }
-    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:hover { background: var(--green-mid); box-shadow: 0 0 24px var(--green-glow); transform: translateY(-1px); }
 
-    .form-footer {
-      margin-top: 32px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--slate-400);
-    }
+    .form-footer { margin-top: 28px; text-align: center; font-size: 12px; color: var(--slate-500); }
 
-    /* ── Responsive ─────────────────────────── */
-    @media (max-width: 900px) {
-      .left-panel { display: none; }
-      .right-panel { width: 100%; padding: 40px 28px; }
-    }
+    @media (max-width: 860px) { .left-panel { display: none; } .right-panel { width: 100%; padding: 40px 24px; } }
   </style>
 </head>
 <body>
 
-  <!-- Left decorative panel -->
   <div class="left-panel">
-    <svg class="deco-lines" viewBox="0 0 600 800" preserveAspectRatio="none">
+    <svg class="deco" viewBox="0 0 600 800" preserveAspectRatio="none">
       <line x1="0" y1="0" x2="600" y2="800" stroke="white" stroke-width="1"/>
       <line x1="100" y1="0" x2="600" y2="700" stroke="white" stroke-width="0.8"/>
-      <line x1="200" y1="0" x2="600" y2="600" stroke="white" stroke-width="0.6"/>
-      <circle cx="480" cy="200" r="120" stroke="white" stroke-width="0.8" fill="none"/>
-      <circle cx="480" cy="200" r="200" stroke="white" stroke-width="0.4" fill="none"/>
-      <circle cx="100" cy="650" r="80" stroke="white" stroke-width="0.6" fill="none"/>
+      <circle cx="480" cy="200" r="140" stroke="white" stroke-width="0.8" fill="none"/>
+      <circle cx="480" cy="200" r="220" stroke="white" stroke-width="0.4" fill="none"/>
+      <circle cx="80" cy="650" r="90" stroke="white" stroke-width="0.6" fill="none"/>
     </svg>
-
     <div class="left-content">
-      <div class="brand">
-        <div class="brand-mark">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <div class="logo-wrap">
+        <div class="logo-box">
+          <div class="logo-name">Zoom Design</div>
+          <div class="logo-tagline">Mobilă la Comandă</div>
         </div>
-        <div class="brand-name">Zoom <span>Design</span></div>
       </div>
-
-      <div class="left-eyebrow">Platforma ta de management</div>
-      <h1 class="left-title">
-        Totul într-un<br>singur <span>loc</span>
-      </h1>
-      <p class="left-desc">
-        Gestionează angajații, documentele, clienții, comenzile și ofertele rapid și eficient din același panou de control.
-      </p>
-
-      <div class="feature-list">
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-          Gestiune angajați și documente HR
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fa-solid fa-box"></i></div>
-          Urmărire comenzi și termene de livrare
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-          Ofertare și gestiune clienți
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
-          Notificări automate pentru termene
-        </div>
+      <div class="left-eyebrow">Platforma de management</div>
+      <h1 class="left-title">Totul într-un<br>singur <span>loc</span></h1>
+      <p class="left-desc">Gestionează angajații, documentele, clienții, comenzile și ofertele rapid și eficient.</p>
+      <div class="features">
+        <div class="feature"><div class="feature-ic"><i class="fa-solid fa-users"></i></div> Gestiune angajați și HR</div>
+        <div class="feature"><div class="feature-ic"><i class="fa-solid fa-box"></i></div> Urmărire comenzi și livrări</div>
+        <div class="feature"><div class="feature-ic"><i class="fa-solid fa-file-invoice-dollar"></i></div> Ofertare și clienți</div>
+        <div class="feature"><div class="feature-ic"><i class="fa-solid fa-bell"></i></div> Notificări automate termene</div>
       </div>
     </div>
   </div>
 
-  <!-- Right form panel -->
   <div class="right-panel">
-
     <div class="form-header">
-      <div class="form-title">Bună ziua! 👋</div>
-      <div class="form-subtitle">
-        Nu ai cont?
-        <a href="{% url 'register' %}">Înregistrează-te</a>
-      </div>
+      <div class="form-title">Autentificare</div>
+      <div class="form-subtitle">Nu ai cont? <a href="{% url 'register' %}">Înregistrează-te</a></div>
     </div>
 
     {% if form.errors %}
-    <div class="alert alert-danger">
-      <i class="fa-solid fa-circle-xmark"></i>
-      Utilizator sau parolă incorecte. Încearcă din nou.
-    </div>
+    <div class="alert alert-danger"><i class="fa-solid fa-circle-xmark"></i> Utilizator sau parolă incorecte.</div>
     {% endif %}
-
-    {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">
-        <i class="fa-solid fa-circle-info"></i> {{ message }}
-      </div>
-      {% endfor %}
-    {% endif %}
+    {% if messages %}{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}"><i class="fa-solid fa-circle-info"></i> {{ message }}</div>
+    {% endfor %}{% endif %}
 
     <form method="POST" action="{% url 'login' %}">
       {% csrf_token %}
-
       <div class="form-group">
         <label class="form-label" for="username">Utilizator</label>
         <div class="input-wrap">
           <i class="input-icon fa-solid fa-user"></i>
-          <input
-            class="form-input"
-            type="text"
-            id="username"
-            name="username"
-            placeholder="ex: ion.popescu"
-            autocomplete="username"
-            required
-          />
+          <input class="form-input" type="text" id="username" name="username" placeholder="ex: ion.popescu" autocomplete="username" required/>
         </div>
       </div>
-
       <div class="form-group">
         <label class="form-label" for="password">Parolă</label>
         <div class="input-wrap">
           <i class="input-icon fa-solid fa-lock"></i>
-          <input
-            class="form-input"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="••••••••"
-            autocomplete="current-password"
-            required
-          />
-          <button type="button" class="toggle-pass" onclick="togglePass('password', this)">
-            <i class="fa-regular fa-eye"></i>
-          </button>
+          <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required/>
+          <button type="button" class="toggle-pass" onclick="togglePass('password',this)"><i class="fa-regular fa-eye"></i></button>
         </div>
       </div>
-
       <div class="form-row-meta">
-        <label class="remember-label">
-          <input type="checkbox" name="remember"/> Ține-mă minte
-        </label>
+        <label class="remember-label"><input type="checkbox" name="remember"/> Ține-mă minte</label>
         <a href="#" class="forgot-link">Ai uitat parola?</a>
       </div>
-
-      <button type="submit" class="btn-submit">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        Autentificare
-      </button>
+      <button type="submit" class="btn-submit"><i class="fa-solid fa-right-to-bracket"></i> Intră în cont</button>
     </form>
 
-    <div class="form-footer">
-      &copy; {% now "Y" %} Zoom Design. Toate drepturile rezervate.
-    </div>
-
+    <div class="form-footer">&copy; {% now "Y" %} Zoom Design — Mobilă la Comandă</div>
   </div>
 
   <script>
-    function togglePass(fieldId, btn) {
-      const input = document.getElementById(fieldId);
-      const icon = btn.querySelector('i');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.className = 'fa-regular fa-eye-slash';
-      } else {
-        input.type = 'password';
-        icon.className = 'fa-regular fa-eye';
-      }
+    function togglePass(id, btn) {
+      const inp = document.getElementById(id);
+      const ic = btn.querySelector('i');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      ic.className = inp.type === 'password' ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash';
     }
   </script>
 </body>

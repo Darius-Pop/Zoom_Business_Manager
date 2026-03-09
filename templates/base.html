@@ -6,32 +6,37 @@
   <title>{% block title %}Zoom Design{% endblock %}</title>
   {% load static %}
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     :root {
-      --navy:        #0e1c35;
-      --navy-mid:    #162540;
-      --navy-light:  #1d3058;
-      --gold:        #c8a84b;
-      --gold-light:  #e2c46e;
-      --gold-pale:   rgba(200,168,75,0.13);
+      --black:       #080c08;
+      --dark:        #0d120d;
+      --dark-mid:    #111811;
+      --dark-card:   #151d15;
+      --green-deep:  #1a5c1a;
+      --green:       #2d8a2d;
+      --green-mid:   #3aaa3a;
+      --green-light: #4dc94d;
+      --green-pale:  rgba(45,138,45,0.13);
+      --green-glow:  rgba(45,138,45,0.25);
       --white:       #ffffff;
-      --offwhite:    #f5f6f9;
-      --slate-200:   #e4e8f0;
-      --slate-300:   #cdd4e0;
-      --slate-400:   #9aaabf;
-      --slate-500:   #677a96;
-      --slate-600:   #445068;
-      --slate-700:   #2b3a52;
+      --offwhite:    #f0f4f0;
+      --slate-100:   #e8ede8;
+      --slate-200:   #d0d8d0;
+      --slate-300:   #a8b8a8;
+      --slate-400:   #7a927a;
+      --slate-500:   #556655;
+      --slate-600:   #3a4a3a;
+      --slate-700:   #243024;
       --danger:      #c0392b;
-      --warning:     #b8860b;
-      --success:     #1a7a4a;
-      --topbar-h:    64px;
-      --shadow-sm:   0 1px 4px rgba(14,28,53,0.08);
-      --shadow-md:   0 4px 16px rgba(14,28,53,0.13);
-      --shadow-lg:   0 10px 36px rgba(14,28,53,0.18);
+      --warning:     #c8820a;
+      --success:     #2d8a2d;
+      --topbar-h:    68px;
+      --shadow-sm:   0 1px 4px rgba(0,0,0,0.3);
+      --shadow-md:   0 4px 16px rgba(0,0,0,0.4);
+      --shadow-lg:   0 10px 36px rgba(0,0,0,0.5);
       --radius:      8px;
       --transition:  0.18s ease;
     }
@@ -40,57 +45,97 @@
     html, body { height: 100%; }
     body {
       font-family: 'Mulish', sans-serif;
-      background: var(--offwhite);
-      color: var(--slate-700);
+      background: var(--dark);
+      color: var(--offwhite);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
     a { text-decoration: none; color: inherit; }
 
-    /* ── Topbar ─────────────────────────────── */
+    /* ── Topbar ───────────────────────────────── */
     .topbar {
       height: var(--topbar-h);
-      background: var(--navy);
+      background: var(--black);
+      border-bottom: 1px solid rgba(45,138,45,0.3);
       display: flex;
       align-items: center;
       padding: 0 32px;
-      gap: 20px;
+      gap: 16px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 16px rgba(14,28,53,0.3);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.5);
     }
 
-    .topbar-brand {
+    /* ── Logo SVG (replicates the brand image) ── */
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 11px;
-      margin-right: 16px;
-    }
-    .brand-mark {
-      width: 36px; height: 36px;
-      background: var(--gold);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
+      gap: 0;
+      margin-right: 20px;
       flex-shrink: 0;
+      position: relative;
     }
-    .brand-mark svg { width: 18px; height: 18px; fill: var(--navy); }
-    .brand-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+    .logo-box {
+      position: relative;
+      padding: 6px 18px;
+    }
+    /* Corner brackets */
+    .logo-box::before,
+    .logo-box::after {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      border-color: var(--green-mid);
+      border-style: solid;
+    }
+    .logo-box::before {
+      top: 0; left: 0;
+      border-width: 2px 0 0 2px;
+    }
+    .logo-box::after {
+      bottom: 0; right: 0;
+      border-width: 0 2px 2px 0;
+    }
+    .logo-inner { display: flex; flex-direction: column; align-items: center; }
+    .logo-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
       font-weight: 700;
-      color: var(--white);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .logo-tagline {
+      font-family: 'Mulish', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--slate-300);
+      display: flex;
+      align-items: center;
+      gap: 6px;
       white-space: nowrap;
     }
-    .brand-name span { color: var(--gold); }
+    .logo-tagline::before,
+    .logo-tagline::after {
+      content: '';
+      width: 16px; height: 1px;
+      background: var(--green-mid);
+      opacity: 0.7;
+    }
 
-    /* Nav links */
+    /* Nav */
     .topbar-nav {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
       flex: 1;
     }
     .nav-link {
@@ -98,176 +143,194 @@
       align-items: center;
       gap: 8px;
       padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 13.5px;
+      border-radius: var(--radius);
+      font-size: 14px;
       font-weight: 600;
-      color: rgba(255,255,255,0.55);
+      color: var(--slate-300);
       transition: background var(--transition), color var(--transition);
       white-space: nowrap;
       border-bottom: 2px solid transparent;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.04em;
     }
     .nav-link:hover {
-      background: rgba(255,255,255,0.07);
-      color: rgba(255,255,255,0.9);
+      background: rgba(45,138,45,0.1);
+      color: var(--green-light);
     }
     .nav-link.active {
-      color: var(--gold-light);
-      background: rgba(200,168,75,0.12);
-      border-bottom-color: var(--gold);
+      color: var(--green-light);
+      background: rgba(45,138,45,0.15);
+      border-bottom-color: var(--green-mid);
     }
     .nav-link i { font-size: 13px; }
 
     .topbar-spacer { flex: 1; }
 
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
     .tb-icon {
-      width: 36px; height: 36px;
-      border-radius: 6px;
+      width: 36px; height: 36px; border-radius: var(--radius);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      color: rgba(255,255,255,0.5);
-      font-size: 15px;
+      cursor: pointer; color: var(--slate-300); font-size: 15px;
       transition: background var(--transition), color var(--transition);
       position: relative;
     }
-    .tb-icon:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .tb-icon:hover { background: rgba(45,138,45,0.15); color: var(--green-light); }
     .notif-dot {
       position: absolute; top: 7px; right: 7px;
       width: 7px; height: 7px;
-      background: var(--gold); border-radius: 50%;
-      border: 1.5px solid var(--navy);
+      background: var(--green-mid); border-radius: 50%;
+      border: 1.5px solid var(--black);
+      box-shadow: 0 0 6px var(--green-glow);
     }
-    .topbar-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.1); margin: 0 4px; }
+    .topbar-divider { width: 1px; height: 22px; background: rgba(45,138,45,0.2); margin: 0 4px; }
     .topbar-avatar {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: var(--navy-light);
-      border: 2px solid var(--gold);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--dark-mid);
+      border: 2px solid var(--green-mid);
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: var(--gold-light);
-      cursor: pointer;
-      transition: box-shadow var(--transition);
+      font-size: 12px; font-weight: 700; color: var(--green-light);
+      cursor: pointer; transition: box-shadow var(--transition);
+      font-family: 'Rajdhani', sans-serif;
     }
-    .topbar-avatar:hover { box-shadow: 0 0 0 3px var(--gold-pale); }
+    .topbar-avatar:hover { box-shadow: 0 0 0 3px var(--green-pale); }
 
-    /* Mobile toggle */
     .mobile-menu-btn {
-      display: none;
-      width: 36px; height: 36px;
+      display: none; width: 36px; height: 36px;
       align-items: center; justify-content: center;
-      border-radius: 6px; cursor: pointer;
-      color: rgba(255,255,255,0.7); font-size: 16px;
-      background: rgba(255,255,255,0.07);
-      border: none;
+      border-radius: var(--radius); cursor: pointer;
+      color: var(--slate-300); font-size: 16px;
+      background: rgba(45,138,45,0.1); border: 1px solid rgba(45,138,45,0.2);
     }
 
-    /* ── Messages ───────────────────────────── */
+    /* ── Messages ─────────────────────────────── */
     .messages-wrap { padding: 16px 32px 0; }
     .alert {
       display: flex; align-items: center; gap: 10px;
-      padding: 11px 16px; border-radius: var(--radius);
-      font-size: 13px; font-weight: 500;
+      padding: 12px 16px; border-radius: var(--radius);
+      font-size: 13.5px; font-weight: 500;
       margin-bottom: 10px; border: 1px solid;
       border-left-width: 4px;
     }
-    .alert-success { background:#f0faf5; border-color:#a3d9be; border-left-color:var(--success); color:#145c38; }
-    .alert-danger  { background:#fdf3f2; border-color:#f0b4ae; border-left-color:var(--danger);  color:#922019; }
-    .alert-warning { background:#fdf8ec; border-color:#e8d08a; border-left-color:var(--warning); color:#8a6400; }
-    .alert-info    { background:#eff5fc; border-color:#a3bde0; border-left-color:#1a5a8a;         color:#0f3d6b; }
+    .alert-success { background:rgba(45,138,45,0.12); border-color:rgba(45,138,45,0.3); border-left-color:var(--green-mid); color:#6dd96d; }
+    .alert-danger  { background:rgba(192,57,43,0.12); border-color:rgba(192,57,43,0.3); border-left-color:var(--danger); color:#e87d72; }
+    .alert-warning { background:rgba(200,130,10,0.12); border-color:rgba(200,130,10,0.3); border-left-color:var(--warning); color:#e8a84a; }
+    .alert-info    { background:rgba(45,138,45,0.08); border-color:rgba(45,138,45,0.2); border-left-color:var(--green-deep); color:var(--slate-200); }
 
-    /* ── Page wrapper ───────────────────────── */
-    .page-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+    /* ── Page ─────────────────────────────────── */
+    .page-wrap { flex: 1; display: flex; flex-direction: column; }
     .page-content {
-      flex: 1;
-      padding: 32px;
+      flex: 1; padding: 32px;
       animation: fadeUp 0.35s ease both;
     }
 
-    /* ── Footer ─────────────────────────────── */
+    /* ── Footer ───────────────────────────────── */
     .footer {
-      background: var(--navy);
+      background: var(--black);
+      border-top: 1px solid rgba(45,138,45,0.2);
       padding: 16px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--slate-400);
     }
-    .footer-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px; font-weight: 700;
-      color: rgba(255,255,255,0.5);
+    .footer-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--green-mid); letter-spacing: 0.06em;
     }
-    .footer-brand span { color: var(--gold); }
     .footer-links { display: flex; gap: 18px; }
-    .footer-links a:hover { color: rgba(255,255,255,0.6); }
+    .footer-links a:hover { color: var(--green-light); }
 
-    /* ── Shared components ──────────────────── */
+    /* ── Components ───────────────────────────── */
     .card {
-      background: var(--white);
-      border: 1px solid var(--slate-200);
+      background: var(--dark-card);
+      border: 1px solid rgba(45,138,45,0.2);
       border-radius: 12px;
       box-shadow: var(--shadow-sm);
     }
     .card-header {
       padding: 18px 22px;
-      border-bottom: 1px solid var(--slate-200);
+      border-bottom: 1px solid rgba(45,138,45,0.15);
       display: flex; align-items: center; justify-content: space-between;
     }
     .card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 17px; font-weight: 700; color: var(--navy);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--green-light); letter-spacing: 0.04em;
     }
     .card-body { padding: 22px; }
 
     .btn {
       display: inline-flex; align-items: center; gap: 7px;
-      padding: 8px 18px; border-radius: 6px;
-      font-family: 'Mulish', sans-serif; font-size: 13px; font-weight: 600;
-      cursor: pointer; border: 1px solid transparent; transition: all var(--transition);
+      padding: 9px 20px; border-radius: var(--radius);
+      font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer; border: 1px solid transparent;
+      transition: all var(--transition); letter-spacing: 0.04em;
     }
-    .btn-primary { background: var(--navy); color: var(--white); }
-    .btn-primary:hover { background: var(--navy-light); box-shadow: var(--shadow-md); }
-    .btn-gold { background: var(--gold); color: var(--navy); }
-    .btn-gold:hover { background: var(--gold-light); }
-    .btn-outline { background: transparent; border-color: var(--slate-300); color: var(--slate-600); }
-    .btn-outline:hover { background: var(--offwhite); border-color: var(--slate-400); }
+    .btn-primary {
+      background: var(--green-deep); color: var(--white);
+      border-color: var(--green-mid);
+    }
+    .btn-primary:hover {
+      background: var(--green); box-shadow: 0 0 16px var(--green-glow);
+    }
+    .btn-green {
+      background: var(--green-mid); color: var(--black); font-weight: 700;
+    }
+    .btn-green:hover {
+      background: var(--green-light); box-shadow: 0 0 20px var(--green-glow);
+    }
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(45,138,45,0.4); color: var(--slate-200);
+    }
+    .btn-outline:hover {
+      border-color: var(--green-mid); color: var(--green-light);
+      background: var(--green-pale);
+    }
 
     .badge {
       display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 9px; border-radius: 99px;
+      padding: 3px 10px; border-radius: 99px;
       font-size: 11px; font-weight: 700;
     }
-    .badge-danger  { background:#fef0ee; color:var(--danger); }
-    .badge-warning { background:#fdf8ec; color:var(--warning); }
-    .badge-success { background:#e8f7f0; color:var(--success); }
-    .badge-info    { background:#eff5fc; color:#1a5a8a; }
+    .badge-danger  { background:rgba(192,57,43,0.2);  color:#e87d72; }
+    .badge-warning { background:rgba(200,130,10,0.2); color:#e8a84a; }
+    .badge-success { background:rgba(45,138,45,0.2);  color:var(--green-light); }
+    .badge-info    { background:rgba(45,100,45,0.2);  color:var(--slate-200); }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    thead th {
+      background: rgba(45,138,45,0.08);
+      color: var(--green-mid);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 12px 16px;
+      text-align: left; border-bottom: 1px solid rgba(45,138,45,0.2);
+    }
+    tbody td {
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(45,138,45,0.08);
+      color: var(--slate-200); vertical-align: middle;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(45,138,45,0.05); }
 
     @keyframes fadeUp {
       from { opacity:0; transform:translateY(12px); }
       to   { opacity:1; transform:translateY(0); }
     }
 
-    /* ── Mobile nav drawer ──────────────────── */
+    /* Mobile nav */
     .mobile-nav {
-      display: none;
-      flex-direction: column;
-      background: var(--navy-mid);
-      padding: 12px 16px;
-      gap: 4px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: none; flex-direction: column;
+      background: var(--black); padding: 12px 16px; gap: 4px;
+      border-bottom: 1px solid rgba(45,138,45,0.2);
     }
     .mobile-nav.open { display: flex; }
-    .mobile-nav .nav-link { border-bottom: none; border-radius: 6px; }
+    .mobile-nav .nav-link { border-bottom: none; }
 
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .topbar-nav { display: none; }
       .mobile-menu-btn { display: flex; }
       .page-content { padding: 20px 16px; }
@@ -276,41 +339,32 @@
     }
 
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb { background: rgba(45,138,45,0.3); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green-mid); }
   </style>
 
   {% block extra_head %}{% endblock %}
 </head>
 <body>
 
-  <!-- Topbar -->
   <header class="topbar">
-    <div class="topbar-brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    <!-- Logo -->
+    <div class="brand-logo">
+      <div class="logo-box">
+        <div class="logo-inner">
+          <div class="logo-name">Zoom Design</div>
+          <div class="logo-tagline">Mobilă la Comandă</div>
+        </div>
       </div>
-      <div class="brand-name">Zoom <span>Design</span></div>
     </div>
 
     <nav class="topbar-nav">
-      <a href="{% url 'home' %}" class="nav-link {% block nav_home %}{% endblock %}">
-        <i class="fa-solid fa-house"></i> Acasă
-      </a>
-      <a href="{% url 'angajati' %}" class="nav-link {% block nav_angajati %}{% endblock %}">
-        <i class="fa-solid fa-users"></i> Angajați
-      </a>
-      <a href="{% url 'documente' %}" class="nav-link {% block nav_documente %}{% endblock %}">
-        <i class="fa-solid fa-file-lines"></i> Documente
-      </a>
-      <a href="{% url 'clienti' %}" class="nav-link {% block nav_clienti %}{% endblock %}">
-        <i class="fa-solid fa-building-user"></i> Clienți
-      </a>
-      <a href="{% url 'comenzi' %}" class="nav-link {% block nav_comenzi %}{% endblock %}">
-        <i class="fa-solid fa-box"></i> Comenzi
-      </a>
-      <a href="{% url 'ofertare' %}" class="nav-link {% block nav_ofertare %}{% endblock %}">
-        <i class="fa-solid fa-file-invoice-dollar"></i> Ofertare
-      </a>
+      <a href="{% url 'home' %}"      class="nav-link {% block nav_home %}{% endblock %}"><i class="fa-solid fa-house"></i> Acasă</a>
+      <a href="{% url 'angajati' %}"  class="nav-link {% block nav_angajati %}{% endblock %}"><i class="fa-solid fa-users"></i> Angajați</a>
+      <a href="{% url 'documente' %}" class="nav-link {% block nav_documente %}{% endblock %}"><i class="fa-solid fa-file-lines"></i> Documente</a>
+      <a href="{% url 'clienti' %}"   class="nav-link {% block nav_clienti %}{% endblock %}"><i class="fa-solid fa-building-user"></i> Clienți</a>
+      <a href="{% url 'comenzi' %}"   class="nav-link {% block nav_comenzi %}{% endblock %}"><i class="fa-solid fa-box"></i> Comenzi</a>
+      <a href="{% url 'ofertare' %}"  class="nav-link {% block nav_ofertare %}{% endblock %}"><i class="fa-solid fa-file-invoice-dollar"></i> Ofertare</a>
     </nav>
 
     <div class="topbar-spacer"></div>
@@ -321,20 +375,22 @@
         <span class="notif-dot"></span>
       </div>
       <div class="topbar-divider"></div>
-      <div class="topbar-avatar">
+      <div class="topbar-avatar" title="{{ user.get_full_name|default:user.username }}">
         {% if user.is_authenticated %}
           {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
         {% else %}
           <i class="fa-solid fa-user" style="font-size:11px"></i>
         {% endif %}
       </div>
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Meniu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      {% if user.is_authenticated %}
+      <a href="{% url 'logout' %}" class="tb-icon" title="Deconectare" style="color:#e87d72;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </a>
+      {% endif %}
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
     </div>
   </header>
 
-  <!-- Mobile nav -->
   <nav class="mobile-nav" id="mobileNav">
     <a href="{% url 'home' %}"      class="nav-link"><i class="fa-solid fa-house"></i> Acasă</a>
     <a href="{% url 'angajati' %}"  class="nav-link"><i class="fa-solid fa-users"></i> Angajați</a>
@@ -345,7 +401,6 @@
   </nav>
 
   <div class="page-wrap">
-
     {% if messages %}
     <div class="messages-wrap">
       {% for message in messages %}
@@ -361,14 +416,14 @@
     </main>
 
     <footer class="footer">
-      <div class="footer-brand">Zoom <span>Design</span></div>
-      <span>&copy; {% now "Y" %} Zoom Design. Toate drepturile rezervate.</span>
+      <div class="footer-logo">ZOOM DESIGN</div>
+      <span>&copy; {% now "Y" %} Zoom Design — Mobilă la Comandă</span>
       <div class="footer-links">
         <a href="#">Confidențialitate</a>
         <a href="#">Suport</a>
+        <a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Deconectare</a>
       </div>
     </footer>
-
   </div>
 
   <script>

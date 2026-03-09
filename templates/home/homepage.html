@@ -6,100 +6,92 @@
 
 {% block extra_head %}
 <style>
-
-  /* ── Hero ───────────────────────────────────────── */
+  /* ── Hero ─────────────────────────────────────── */
   .hero {
-    background: linear-gradient(130deg, var(--navy) 0%, var(--navy-light) 55%, #1a3a6e 100%);
+    background: linear-gradient(135deg, #080c08 0%, #0d1a0d 50%, #0f2010 100%);
+    border: 1px solid rgba(45,138,45,0.3);
     border-radius: 16px;
-    padding: 52px 48px;
+    padding: 56px 52px;
     margin-bottom: 36px;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 0 60px rgba(45,138,45,0.1);
     animation: fadeUp 0.4s ease both;
   }
   .hero::before {
     content: '';
     position: absolute;
-    top: -80px; right: -80px;
-    width: 340px; height: 340px;
-    background: radial-gradient(circle, rgba(200,168,75,0.2) 0%, transparent 65%);
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(45,138,45,0.18) 0%, transparent 65%);
     pointer-events: none;
   }
   .hero::after {
     content: '';
     position: absolute;
-    bottom: -100px; left: 25%;
-    width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 65%);
+    bottom: -80px; left: 20%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(45,138,45,0.07) 0%, transparent 65%);
     pointer-events: none;
-  }
-  /* Decorative geometric lines */
-  .hero-lines {
-    position: absolute;
-    top: 0; right: 0;
-    width: 360px; height: 100%;
-    pointer-events: none;
-    opacity: 0.07;
-  }
-  .hero-content { position: relative; z-index: 1; }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 24px; height: 2px;
-    background: var(--gold);
-    border-radius: 2px;
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.1;
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
-  }
-  .hero-title span { color: var(--gold-light); }
-  .hero-subtitle {
-    font-size: 15px;
-    color: rgba(255,255,255,0.5);
-    max-width: 480px;
-    line-height: 1.6;
-    margin-bottom: 32px;
-  }
-  .hero-date {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.35);
-    padding: 6px 14px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 99px;
-    backdrop-filter: blur(4px);
   }
 
-  /* ── Navigation Buttons ─────────────────────────── */
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--slate-400);
-    margin-bottom: 14px;
+  /* Decorative bracket corners on hero */
+  .hero-corner { position: absolute; width: 40px; height: 40px; }
+  .hero-corner.tl { top: 16px; left: 16px; border-top: 2px solid var(--green-mid); border-left: 2px solid var(--green-mid); }
+  .hero-corner.tr { top: 16px; right: 16px; border-top: 2px solid var(--green-mid); border-right: 2px solid var(--green-mid); }
+  .hero-corner.bl { bottom: 16px; left: 16px; border-bottom: 2px solid var(--green-mid); border-left: 2px solid var(--green-mid); }
+  .hero-corner.br { bottom: 16px; right: 16px; border-bottom: 2px solid var(--green-mid); border-right: 2px solid var(--green-mid); }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--green-mid); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
   }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--green-mid); border-radius: 2px; }
+
+  .hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 56px; font-weight: 700;
+    color: var(--white); line-height: 1.05;
+    margin-bottom: 18px; letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-subtitle {
+    font-size: 16px; color: var(--slate-300);
+    max-width: 500px; line-height: 1.7; margin-bottom: 36px;
+  }
+  .hero-subtitle strong { color: var(--green-light); }
+
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .hero-date {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 500; color: var(--slate-400);
+    padding: 6px 14px;
+    background: rgba(45,138,45,0.08);
+    border: 1px solid rgba(45,138,45,0.2);
+    border-radius: 99px;
+  }
+  .hero-date i { color: var(--green-mid); }
+
+  /* ── Nav Buttons ──────────────────────────────── */
+  .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--green-mid); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(45,138,45,0.2); }
 
   .nav-buttons-grid {
     display: grid;
@@ -110,70 +102,52 @@
   }
 
   .nav-btn {
-    background: var(--white);
-    border: 1px solid var(--slate-200);
+    background: var(--dark-card);
+    border: 1px solid rgba(45,138,45,0.2);
     border-radius: 12px;
-    padding: 24px 16px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all var(--transition);
+    padding: 28px 16px 22px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 12px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
+  }
+  .nav-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(45,138,45,0.08) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.2s;
   }
   .nav-btn::after {
     content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: center;
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--green-mid);
+    transform: scaleX(0); transform-origin: center;
     transition: transform 0.22s ease;
-    border-radius: 0 0 12px 12px;
   }
-  .nav-btn:hover {
-    border-color: var(--navy-light);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-3px);
-  }
+  .nav-btn:hover { border-color: var(--green-mid); box-shadow: 0 0 20px rgba(45,138,45,0.15); transform: translateY(-4px); }
+  .nav-btn:hover::before { opacity: 1; }
   .nav-btn:hover::after { transform: scaleX(1); }
-  .nav-btn:hover .nav-btn-icon { background: var(--navy); color: var(--white); }
+  .nav-btn:hover .nav-btn-icon { background: var(--green-mid); color: var(--black); box-shadow: 0 0 16px var(--green-glow); }
 
   .nav-btn-icon {
-    width: 52px; height: 52px;
-    border-radius: 12px;
-    background: var(--offwhite);
-    border: 1px solid var(--slate-200);
+    width: 56px; height: 56px; border-radius: 12px;
+    background: rgba(45,138,45,0.1);
+    border: 1px solid rgba(45,138,45,0.25);
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    color: var(--navy);
-    transition: all var(--transition);
+    font-size: 22px; color: var(--green-mid);
+    transition: all 0.2s ease;
   }
   .nav-btn-label {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--navy);
-    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--white); text-align: center;
+    letter-spacing: 0.04em;
   }
-  .nav-btn-count {
-    font-size: 11px;
-    color: var(--slate-400);
-    font-weight: 500;
-  }
+  .nav-btn-count { font-size: 12px; color: var(--slate-400); font-weight: 500; }
 
-  /* Icon accent colors on hover */
-  .nav-btn:nth-child(1):hover .nav-btn-icon { background: #1a3a6e; }
-  .nav-btn:nth-child(2):hover .nav-btn-icon { background: #1a5a3a; }
-  .nav-btn:nth-child(3):hover .nav-btn-icon { background: #4a2060; }
-  .nav-btn:nth-child(4):hover .nav-btn-icon { background: #7a3020; }
-  .nav-btn:nth-child(5):hover .nav-btn-icon { background: #6a5010; }
-
-  /* ── Alert Cards ────────────────────────────────── */
+  /* ── Alert Cards ──────────────────────────────── */
   .alert-cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -182,134 +156,92 @@
   }
 
   .alert-card {
-    background: var(--white);
-    border: 1px solid var(--slate-200);
+    background: var(--dark-card);
+    border: 1px solid rgba(45,138,45,0.2);
     border-radius: 14px;
-    box-shadow: var(--shadow-sm);
     overflow: hidden;
-    transition: box-shadow var(--transition), transform var(--transition);
+    transition: box-shadow 0.2s, transform 0.2s;
   }
-  .alert-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
+  .alert-card:hover { box-shadow: 0 0 24px rgba(45,138,45,0.12); transform: translateY(-2px); }
 
   .alert-card-header {
     padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid var(--slate-200);
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid rgba(45,138,45,0.12);
+    background: rgba(45,138,45,0.05);
   }
   .alert-card-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
+    width: 42px; height: 42px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
+    font-size: 17px; flex-shrink: 0;
   }
-  .icon-red    { background: #fef0ee; color: var(--danger); }
-  .icon-amber  { background: #fdf8ec; color: var(--warning); }
-  .icon-urgent { background: #fff0f0; color: #c0392b; }
+  .icon-red    { background:rgba(192,57,43,0.15);  color:#e87d72; border:1px solid rgba(192,57,43,0.3); }
+  .icon-amber  { background:rgba(200,130,10,0.15); color:#e8a84a; border:1px solid rgba(200,130,10,0.3); }
+  .icon-urgent { background:rgba(192,57,43,0.15);  color:#e87d72; border:1px solid rgba(192,57,43,0.3); }
 
   .alert-card-header-text { flex: 1; }
   .alert-card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px; font-weight: 700; color: var(--navy);
-    line-height: 1.2;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--white); letter-spacing: 0.03em;
   }
-  .alert-card-sub {
-    font-size: 11.5px; color: var(--slate-400); margin-top: 2px; font-weight: 500;
-  }
+  .alert-card-sub { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
   .alert-card-count {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px; font-weight: 700;
-    line-height: 1;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 32px; font-weight: 700; line-height: 1;
   }
-  .count-red    { color: var(--danger); }
-  .count-amber  { color: var(--warning); }
-  .count-urgent { color: #c0392b; }
+  .count-red    { color: #e87d72; }
+  .count-amber  { color: #e8a84a; }
+  .count-urgent { color: #e87d72; }
 
-  /* List inside card */
   .alert-list { display: flex; flex-direction: column; }
   .alert-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex; align-items: center; gap: 12px;
     padding: 12px 20px;
-    border-bottom: 1px solid var(--offwhite);
-    transition: background var(--transition);
-    cursor: pointer;
+    border-bottom: 1px solid rgba(45,138,45,0.06);
+    transition: background 0.15s; cursor: pointer;
   }
   .alert-row:last-child { border-bottom: none; }
-  .alert-row:hover { background: var(--offwhite); }
+  .alert-row:hover { background: rgba(45,138,45,0.05); }
 
-  .alert-row-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-  }
-  .dot-red    { background: var(--danger); }
-  .dot-amber  { background: #d4a017; }
-  .dot-urgent { background: var(--danger); animation: pulse 1.5s ease infinite; }
+  .alert-row-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red    { background: #e87d72; }
+  .dot-amber  { background: #e8a84a; }
+  .dot-urgent { background: #e87d72; animation: pulse 1.5s ease infinite; }
 
   @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.5; transform: scale(1.4); }
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.4; transform:scale(1.5); }
   }
 
   .alert-row-info { flex: 1; min-width: 0; }
-  .alert-row-name {
-    font-size: 13px; font-weight: 600; color: var(--slate-700);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .alert-row-detail {
-    font-size: 11px; color: var(--slate-400); margin-top: 1px;
-  }
-  .alert-row-badge { flex-shrink: 0; }
+  .alert-row-name { font-size: 13.5px; font-weight: 600; color: var(--slate-100); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .alert-row-detail { font-size: 11.5px; color: var(--slate-400); margin-top: 1px; }
 
   .card-footer-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 12px;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--slate-500);
-    border-top: 1px solid var(--offwhite);
-    transition: all var(--transition);
-    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 12px; font-size: 13px; font-weight: 600;
+    color: var(--green-mid);
+    border-top: 1px solid rgba(45,138,45,0.1);
+    transition: all 0.15s; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif; letter-spacing: 0.04em;
   }
-  .card-footer-link:hover { background: var(--offwhite); color: var(--navy); }
+  .card-footer-link:hover { background: rgba(45,138,45,0.08); color: var(--green-light); }
 
-  /* ── Responsive ─────────────────────────────────── */
-  @media (max-width: 1100px) {
-    .alert-cards-grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 860px) {
-    .nav-buttons-grid { grid-template-columns: repeat(3, 1fr); }
-    .hero { padding: 36px 28px; }
-    .hero-title { font-size: 34px; }
-  }
-  @media (max-width: 580px) {
-    .nav-buttons-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero-title { font-size: 28px; }
-    .hero { padding: 28px 20px; }
-  }
+  @media (max-width: 1100px) { .alert-cards-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px)  { .nav-buttons-grid { grid-template-columns: repeat(3,1fr); } .hero { padding: 36px 28px; } .hero-title { font-size: 38px; } }
+  @media (max-width: 580px)  { .nav-buttons-grid { grid-template-columns: repeat(2,1fr); } .hero-title { font-size: 30px; } }
 </style>
 {% endblock %}
 
 {% block content %}
 
-  <!-- ── Hero ─────────────────────────────────────── -->
+  <!-- Hero -->
   <div class="hero">
-    <svg class="hero-lines" viewBox="0 0 360 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="0" y1="0" x2="360" y2="200" stroke="white" stroke-width="1"/>
-      <line x1="60" y1="0" x2="360" y2="240" stroke="white" stroke-width="1"/>
-      <line x1="120" y1="0" x2="360" y2="280" stroke="white" stroke-width="1"/>
-      <line x1="180" y1="0" x2="360" y2="180" stroke="white" stroke-width="1"/>
-      <circle cx="300" cy="80" r="60" stroke="white" stroke-width="1" fill="none"/>
-      <circle cx="300" cy="80" r="100" stroke="white" stroke-width="0.5" fill="none"/>
-    </svg>
+    <div class="hero-corner tl"></div>
+    <div class="hero-corner tr"></div>
+    <div class="hero-corner bl"></div>
+    <div class="hero-corner br"></div>
 
     <div class="hero-content">
       <div class="hero-eyebrow">Panou de control</div>
@@ -317,56 +249,58 @@
         Bine ai venit la<br><span>Zoom Design</span>
       </h1>
       <p class="hero-subtitle">
-        Gestionează angajații, documentele, clienții, comenzile și ofertele din același loc. Totul organizat, rapid și eficient.
+        Gestionează <strong>angajații</strong>, <strong>documentele</strong>, <strong>clienții</strong>, <strong>comenzile</strong> și <strong>ofertele</strong> din același loc. Totul organizat, rapid și eficient.
       </p>
-      <div class="hero-date">
-        <i class="fa-regular fa-calendar"></i>
-        {% now "l, d F Y" %}
+      <div class="hero-actions">
+        <div class="hero-date">
+          <i class="fa-regular fa-calendar"></i>
+          {% now "l, d F Y" %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="hero-date" style="color:var(--green-light);">
+          <i class="fa-solid fa-circle-user"></i>
+          {{ user.get_full_name|default:user.username }}
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
 
-  <!-- ── Navigation Buttons ───────────────────────── -->
+  <!-- Nav Buttons -->
   <div class="section-label">Navigare rapidă</div>
   <div class="nav-buttons-grid">
-
     <a href="{% url 'angajati' %}" class="nav-btn">
       <div class="nav-btn-icon"><i class="fa-solid fa-users"></i></div>
       <div class="nav-btn-label">Angajați</div>
       <div class="nav-btn-count">{{ total_angajati|default:"—" }} înregistrați</div>
     </a>
-
     <a href="{% url 'documente' %}" class="nav-btn">
       <div class="nav-btn-icon"><i class="fa-solid fa-file-lines"></i></div>
       <div class="nav-btn-label">Documente</div>
       <div class="nav-btn-count">{{ total_documente|default:"—" }} documente</div>
     </a>
-
     <a href="{% url 'clienti' %}" class="nav-btn">
       <div class="nav-btn-icon"><i class="fa-solid fa-building-user"></i></div>
       <div class="nav-btn-label">Clienți</div>
       <div class="nav-btn-count">{{ total_clienti|default:"—" }} activi</div>
     </a>
-
     <a href="{% url 'comenzi' %}" class="nav-btn">
       <div class="nav-btn-icon"><i class="fa-solid fa-box"></i></div>
       <div class="nav-btn-label">Comenzi</div>
       <div class="nav-btn-count">{{ total_comenzi|default:"—" }} în curs</div>
     </a>
-
     <a href="{% url 'ofertare' %}" class="nav-btn">
       <div class="nav-btn-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
       <div class="nav-btn-label">Ofertare</div>
       <div class="nav-btn-count">{{ total_oferte|default:"—" }} oferte</div>
     </a>
-
   </div>
 
-  <!-- ── Alert Cards ───────────────────────────────── -->
+  <!-- Alert Cards -->
   <div class="section-label">Atenție necesară</div>
   <div class="alert-cards-grid">
 
-    <!-- Card 1: Documente pe cale de expirare -->
+    <!-- Documente pe cale de expirare -->
     <div class="alert-card">
       <div class="alert-card-header">
         <div class="alert-card-icon icon-red"><i class="fa-solid fa-file-circle-exclamation"></i></div>
@@ -382,45 +316,43 @@
           <div class="alert-row-dot dot-red"></div>
           <div class="alert-row-info">
             <div class="alert-row-name">{{ doc.nume }}</div>
-            <div class="alert-row-detail">Expiră: {{ doc.data_expirare|date:"d M Y" }} &middot; {{ doc.angajat }}</div>
+            <div class="alert-row-detail">Expiră: {{ doc.data_expirare|date:"d M Y" }} · {{ doc.angajat }}</div>
           </div>
-          <div class="alert-row-badge">
-            <span class="badge badge-danger">{{ doc.zile_ramase }} zile</span>
-          </div>
+          <span class="badge badge-danger">{{ doc.zile_ramase }} zile</span>
         </div>
         {% empty %}
         <div class="alert-row">
           <div class="alert-row-dot dot-red"></div>
           <div class="alert-row-info">
             <div class="alert-row-name">Contract prestări servicii</div>
-            <div class="alert-row-detail">Expiră: 18 Mar 2026 &middot; SC Alfa SRL</div>
+            <div class="alert-row-detail">Expiră: 18 Mar 2026 · SC Alfa SRL</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-danger">9 zile</span></div>
+          <span class="badge badge-danger">9 zile</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-red"></div>
           <div class="alert-row-info">
             <div class="alert-row-name">Revizie medicală — Radu Pop</div>
-            <div class="alert-row-detail">Expiră: 22 Mar 2026 &middot; HR</div>
+            <div class="alert-row-detail">Expiră: 22 Mar 2026 · HR</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-danger">13 zile</span></div>
+          <span class="badge badge-danger">13 zile</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-amber"></div>
           <div class="alert-row-info">
             <div class="alert-row-name">Autorizație funcționare</div>
-            <div class="alert-row-detail">Expiră: 05 Apr 2026 &middot; Admin</div>
+            <div class="alert-row-detail">Expiră: 05 Apr 2026 · Admin</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-warning">27 zile</span></div>
+          <span class="badge badge-warning">27 zile</span>
         </div>
         {% endfor %}
       </div>
       <a href="{% url 'documente' %}" class="card-footer-link">
-        Vezi toate documentele <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+        Vezi toate documentele <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i>
       </a>
     </div>
 
-    <!-- Card 2: Comenzi apropiate de livrare -->
+    <!-- Comenzi spre livrare -->
     <div class="alert-card">
       <div class="alert-card-header">
         <div class="alert-card-icon icon-amber"><i class="fa-solid fa-truck-fast"></i></div>
@@ -438,18 +370,16 @@
             <div class="alert-row-name">{{ comanda.numar }} — {{ comanda.client }}</div>
             <div class="alert-row-detail">Livrare: {{ comanda.data_livrare|date:"d M Y" }}</div>
           </div>
-          <div class="alert-row-badge">
-            <span class="badge badge-warning">{{ comanda.zile_ramase }} zile</span>
-          </div>
+          <span class="badge badge-warning">{{ comanda.zile_ramase }} zile</span>
         </div>
         {% empty %}
         <div class="alert-row">
-          <div class="alert-row-dot dot-amber"></div>
+          <div class="alert-row-dot dot-red"></div>
           <div class="alert-row-info">
             <div class="alert-row-name">#CMD-2410 — Beta Construct</div>
             <div class="alert-row-detail">Livrare: 11 Mar 2026</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-danger">2 zile</span></div>
+          <span class="badge badge-danger">2 zile</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-amber"></div>
@@ -457,7 +387,7 @@
             <div class="alert-row-name">#CMD-2408 — Gamma SRL</div>
             <div class="alert-row-detail">Livrare: 14 Mar 2026</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-warning">5 zile</span></div>
+          <span class="badge badge-warning">5 zile</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-amber"></div>
@@ -465,7 +395,7 @@
             <div class="alert-row-name">#CMD-2405 — Delta SA</div>
             <div class="alert-row-detail">Livrare: 18 Mar 2026</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-warning">9 zile</span></div>
+          <span class="badge badge-warning">9 zile</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-amber"></div>
@@ -473,16 +403,16 @@
             <div class="alert-row-name">#CMD-2401 — Omega Group</div>
             <div class="alert-row-detail">Livrare: 25 Mar 2026</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-info">16 zile</span></div>
+          <span class="badge badge-success">16 zile</span>
         </div>
         {% endfor %}
       </div>
       <a href="{% url 'comenzi' %}" class="card-footer-link">
-        Vezi toate comenzile <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+        Vezi toate comenzile <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i>
       </a>
     </div>
 
-    <!-- Card 3: Notificări urgente -->
+    <!-- Notificări urgente -->
     <div class="alert-card">
       <div class="alert-card-header">
         <div class="alert-card-icon icon-urgent"><i class="fa-solid fa-bell-concierge"></i></div>
@@ -490,7 +420,7 @@
           <div class="alert-card-title">Notificări urgente</div>
           <div class="alert-card-sub">necesită acțiune imediată</div>
         </div>
-        <div class="alert-card-count count-urgent">{{ notificari_urgente|length|default:"2" }}</div>
+        <div class="alert-card-count count-urgent">{{ notificari_urgente|length|default:"3" }}</div>
       </div>
       <div class="alert-list">
         {% for notif in notificari_urgente %}
@@ -500,9 +430,7 @@
             <div class="alert-row-name">{{ notif.titlu }}</div>
             <div class="alert-row-detail">{{ notif.descriere }}</div>
           </div>
-          <div class="alert-row-badge">
-            <span class="badge badge-danger">Urgent</span>
-          </div>
+          <span class="badge badge-danger">Urgent</span>
         </div>
         {% empty %}
         <div class="alert-row">
@@ -511,7 +439,7 @@
             <div class="alert-row-name">Ofertă #OFR-198 neconfirmată</div>
             <div class="alert-row-detail">Termenul de răspuns a expirat ieri</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-danger">Urgent</span></div>
+          <span class="badge badge-danger">Urgent</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-urgent"></div>
@@ -519,19 +447,19 @@
             <div class="alert-row-name">Aprobare concediu în așteptare</div>
             <div class="alert-row-detail">Ana Mureșan — cerere din 07 Mar</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-danger">Urgent</span></div>
+          <span class="badge badge-danger">Urgent</span>
         </div>
         <div class="alert-row">
           <div class="alert-row-dot dot-amber"></div>
           <div class="alert-row-info">
             <div class="alert-row-name">Factură proformă neachitată</div>
-            <div class="alert-row-detail">Client: SC Alfa SRL &middot; 4.200 RON</div>
+            <div class="alert-row-detail">Client: SC Alfa SRL · 4.200 RON</div>
           </div>
-          <div class="alert-row-badge"><span class="badge badge-warning">Atenție</span></div>
+          <span class="badge badge-warning">Atenție</span>
         </div>
         {% endfor %}
       </div>
-      <div class="card-footer-link" style="color:var(--danger); cursor:default;">
+      <div class="card-footer-link" style="color:#e87d72; cursor:default;">
         <i class="fa-solid fa-circle-exclamation"></i> Rezolvă cât mai curând
       </div>
     </div>
