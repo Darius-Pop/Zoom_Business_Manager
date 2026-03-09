@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Zoom Design{% endblock %}</title>
+  {% load static %}
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --navy:        #0e1c35;
+      --navy-mid:    #162540;
+      --navy-light:  #1d3058;
+      --gold:        #c8a84b;
+      --gold-light:  #e2c46e;
+      --gold-pale:   rgba(200,168,75,0.13);
+      --white:       #ffffff;
+      --offwhite:    #f5f6f9;
+      --slate-200:   #e4e8f0;
+      --slate-300:   #cdd4e0;
+      --slate-400:   #9aaabf;
+      --slate-500:   #677a96;
+      --slate-600:   #445068;
+      --slate-700:   #2b3a52;
+      --danger:      #c0392b;
+      --warning:     #b8860b;
+      --success:     #1a7a4a;
+      --topbar-h:    64px;
+      --shadow-sm:   0 1px 4px rgba(14,28,53,0.08);
+      --shadow-md:   0 4px 16px rgba(14,28,53,0.13);
+      --shadow-lg:   0 10px 36px rgba(14,28,53,0.18);
+      --radius:      8px;
+      --transition:  0.18s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Mulish', sans-serif;
+      background: var(--offwhite);
+      color: var(--slate-700);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Topbar ─────────────────────────────── */
+    .topbar {
+      height: var(--topbar-h);
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(14,28,53,0.3);
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-right: 16px;
+    }
+    .brand-mark {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .brand-mark svg { width: 18px; height: 18px; fill: var(--navy); }
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .brand-name span { color: var(--gold); }
+
+    /* Nav links */
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      transition: background var(--transition), color var(--transition);
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-link:hover {
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.9);
+    }
+    .nav-link.active {
+      color: var(--gold-light);
+      background: rgba(200,168,75,0.12);
+      border-bottom-color: var(--gold);
+    }
+    .nav-link i { font-size: 13px; }
+
+    .topbar-spacer { flex: 1; }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tb-icon {
+      width: 36px; height: 36px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: rgba(255,255,255,0.5);
+      font-size: 15px;
+      transition: background var(--transition), color var(--transition);
+      position: relative;
+    }
+    .tb-icon:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .notif-dot {
+      position: absolute; top: 7px; right: 7px;
+      width: 7px; height: 7px;
+      background: var(--gold); border-radius: 50%;
+      border: 1.5px solid var(--navy);
+    }
+    .topbar-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.1); margin: 0 4px; }
+    .topbar-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--navy-light);
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--gold-light);
+      cursor: pointer;
+      transition: box-shadow var(--transition);
+    }
+    .topbar-avatar:hover { box-shadow: 0 0 0 3px var(--gold-pale); }
+
+    /* Mobile toggle */
+    .mobile-menu-btn {
+      display: none;
+      width: 36px; height: 36px;
+      align-items: center; justify-content: center;
+      border-radius: 6px; cursor: pointer;
+      color: rgba(255,255,255,0.7); font-size: 16px;
+      background: rgba(255,255,255,0.07);
+      border: none;
+    }
+
+    /* ── Messages ───────────────────────────── */
+    .messages-wrap { padding: 16px 32px 0; }
+    .alert {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; border-radius: var(--radius);
+      font-size: 13px; font-weight: 500;
+      margin-bottom: 10px; border: 1px solid;
+      border-left-width: 4px;
+    }
+    .alert-success { background:#f0faf5; border-color:#a3d9be; border-left-color:var(--success); color:#145c38; }
+    .alert-danger  { background:#fdf3f2; border-color:#f0b4ae; border-left-color:var(--danger);  color:#922019; }
+    .alert-warning { background:#fdf8ec; border-color:#e8d08a; border-left-color:var(--warning); color:#8a6400; }
+    .alert-info    { background:#eff5fc; border-color:#a3bde0; border-left-color:#1a5a8a;         color:#0f3d6b; }
+
+    /* ── Page wrapper ───────────────────────── */
+    .page-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .page-content {
+      flex: 1;
+      padding: 32px;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    /* ── Footer ─────────────────────────────── */
+    .footer {
+      background: var(--navy);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px; font-weight: 700;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-brand span { color: var(--gold); }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a:hover { color: rgba(255,255,255,0.6); }
+
+    /* ── Shared components ──────────────────── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-weight: 700; color: var(--navy);
+    }
+    .card-body { padding: 22px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 18px; border-radius: 6px;
+      font-family: 'Mulish', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: 1px solid transparent; transition: all var(--transition);
+    }
+    .btn-primary { background: var(--navy); color: var(--white); }
+    .btn-primary:hover { background: var(--navy-light); box-shadow: var(--shadow-md); }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-outline { background: transparent; border-color: var(--slate-300); color: var(--slate-600); }
+    .btn-outline:hover { background: var(--offwhite); border-color: var(--slate-400); }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px; border-radius: 99px;
+      font-size: 11px; font-weight: 700;
+    }
+    .badge-danger  { background:#fef0ee; color:var(--danger); }
+    .badge-warning { background:#fdf8ec; color:var(--warning); }
+    .badge-success { background:#e8f7f0; color:var(--success); }
+    .badge-info    { background:#eff5fc; color:#1a5a8a; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── Mobile nav drawer ──────────────────── */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--navy-mid);
+      padding: 12px 16px;
+      gap: 4px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav .nav-link { border-bottom: none; border-radius: 6px; }
+
+    @media (max-width: 860px) {
+      .topbar-nav { display: none; }
+      .mobile-menu-btn { display: flex; }
+      .page-content { padding: 20px 16px; }
+      .messages-wrap { padding: 12px 16px 0; }
+      .footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 99px; }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="brand-name">Zoom <span>Design</span></div>
+    </div>
+
+    <nav class="topbar-nav">
+      <a href="{% url 'home' %}" class="nav-link {% block nav_home %}{% endblock %}">
+        <i class="fa-solid fa-house"></i> Acasă
+      </a>
+      <a href="{% url 'angajati' %}" class="nav-link {% block nav_angajati %}{% endblock %}">
+        <i class="fa-solid fa-users"></i> Angajați
+      </a>
+      <a href="{% url 'documente' %}" class="nav-link {% block nav_documente %}{% endblock %}">
+        <i class="fa-solid fa-file-lines"></i> Documente
+      </a>
+      <a href="{% url 'clienti' %}" class="nav-link {% block nav_clienti %}{% endblock %}">
+        <i class="fa-solid fa-building-user"></i> Clienți
+      </a>
+      <a href="{% url 'comenzi' %}" class="nav-link {% block nav_comenzi %}{% endblock %}">
+        <i class="fa-solid fa-box"></i> Comenzi
+      </a>
+      <a href="{% url 'ofertare' %}" class="nav-link {% block nav_ofertare %}{% endblock %}">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Ofertare
+      </a>
+    </nav>
+
+    <div class="topbar-spacer"></div>
+
+    <div class="topbar-right">
+      <div class="tb-icon" title="Notificări">
+        <i class="fa-regular fa-bell"></i>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-divider"></div>
+      <div class="topbar-avatar">
+        {% if user.is_authenticated %}
+          {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+        {% else %}
+          <i class="fa-solid fa-user" style="font-size:11px"></i>
+        {% endif %}
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Meniu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="{% url 'home' %}"      class="nav-link"><i class="fa-solid fa-house"></i> Acasă</a>
+    <a href="{% url 'angajati' %}"  class="nav-link"><i class="fa-solid fa-users"></i> Angajați</a>
+    <a href="{% url 'documente' %}" class="nav-link"><i class="fa-solid fa-file-lines"></i> Documente</a>
+    <a href="{% url 'clienti' %}"   class="nav-link"><i class="fa-solid fa-building-user"></i> Clienți</a>
+    <a href="{% url 'comenzi' %}"   class="nav-link"><i class="fa-solid fa-box"></i> Comenzi</a>
+    <a href="{% url 'ofertare' %}"  class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i> Ofertare</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    {% if messages %}
+    <div class="messages-wrap">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          <i class="fa-solid fa-circle-info"></i> {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <main class="page-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">Zoom <span>Design</span></div>
+      <span>&copy; {% now "Y" %} Zoom Design. Toate drepturile rezervate.</span>
+      <div class="footer-links">
+        <a href="#">Confidențialitate</a>
+        <a href="#">Suport</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('open');
+    });
+  </script>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
