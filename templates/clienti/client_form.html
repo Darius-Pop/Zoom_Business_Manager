@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title %}{% if object %}Editează{% else %}Adaugă{% endif %} Client — Zoom Design{% endblock %}
+{% block nav_clienti %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .form-page-header {
+    margin-bottom: 28px;
+  }
+  .form-page-header h1 {
+    font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .form-page-header p { font-size: 14px; color: var(--slate-400); }
+
+  .form-card {
+    background: var(--dark-card);
+    border: 1px solid rgba(45,138,45,0.2);
+    border-radius: 14px;
+    padding: 32px;
+    max-width: 700px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-grid .full { grid-column: 1 / -1; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-mid);
+  }
+  .form-input, .form-select {
+    background: var(--dark); border: 1.5px solid rgba(45,138,45,0.2);
+    border-radius: 8px; padding: 10px 14px; font-size: 14px;
+    font-family: 'Mulish', sans-serif; color: var(--white); outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+  .form-input::placeholder { color: var(--slate-500); }
+  .form-input:focus, .form-select:focus {
+    border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(45,138,45,0.13);
+  }
+  .form-select option { background: var(--dark); }
+
+  .checkbox-wrap {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--slate-300); cursor: pointer;
+  }
+  .checkbox-wrap input { width: 16px; height: 16px; accent-color: var(--green-mid); cursor: pointer; }
+
+  .form-actions {
+    display: flex; gap: 12px; margin-top: 28px; padding-top: 20px;
+    border-top: 1px solid rgba(45,138,45,0.15);
+  }
+
+  @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="form-page-header">
+  <h1>
+    {% if object %}
+      <i class="fa-solid fa-pen" style="color:var(--green-mid);"></i> Editează client
+    {% else %}
+      <i class="fa-solid fa-user-plus" style="color:var(--green-mid);"></i> Adaugă client nou
+    {% endif %}
+  </h1>
+  <p>Completează câmpurile de mai jos și apasă Salvează.</p>
+</div>
+
+<div class="form-card">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label class="form-label">Prenume *</label>
+        <input class="form-input" type="text" name="prenume" placeholder="Ion"
+          value="{{ form.prenume.value|default:'' }}" required/>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nume *</label>
+        <input class="form-input" type="text" name="nume" placeholder="Popescu"
+          value="{{ form.nume.value|default:'' }}" required/>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email *</label>
+        <input class="form-input" type="email" name="email" placeholder="ion@zoomdesign.ro"
+          value="{{ form.email.value|default:'' }}" required/>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Telefon</label>
+        <input class="form-input" type="text" name="telefon" placeholder="07xx xxx xxx"
+          value="{{ form.telefon.value|default:'' }}"/>
+      </div>
+
+  
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-green">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {% if object %}Salvează modificările{% else %}Adaugă angajat{% endif %}
+      </button>
+      <a href="{% url 'angajati' %}" class="btn btn-outline">
+        <i class="fa-solid fa-xmark"></i> Anulează
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

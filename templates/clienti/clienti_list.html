@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block title %}Clienti — Zoom Design{% endblock %}
+{% block nav_clienti %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .page-header h1 {
+    font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .page-header h1 span { color: var(--green-light); }
+
+  .section-label {
+    font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-mid);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(45,138,45,0.2); }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-bottom: 28px;
+  }
+  .stat-mini {
+    background: var(--dark-card); border: 1px solid rgba(45,138,45,0.2);
+    border-radius: 10px; padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .stat-mini-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(45,138,45,0.1); border: 1px solid rgba(45,138,45,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--green-mid); flex-shrink: 0;
+  }
+  .stat-mini-val {
+    font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 700; color: var(--white); line-height: 1;
+  }
+  .stat-mini-label { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
+
+  .search-bar {
+    display: flex; gap: 10px; margin-bottom: 16px;
+  }
+  .search-input {
+    flex: 1; background: var(--dark-card); border: 1.5px solid rgba(45,138,45,0.2);
+    border-radius: 8px; padding: 10px 14px; font-size: 14px;
+    font-family: 'Mulish', sans-serif; color: var(--white); outline: none;
+    transition: border-color 0.18s;
+  }
+  .search-input::placeholder { color: var(--slate-500); }
+  .search-input:focus { border-color: var(--green-mid); }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Clienti <span>({{ clienti|length }})</span></h1>
+  <a href="{% url 'client_adauga' %}" class="btn btn-green">
+    <i class="fa-solid fa-user-plus"></i> Adaugă client
+  </a>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-mini">
+    <div class="stat-mini-icon"><i class="fa-solid fa-users"></i></div>
+    <div>
+      <div class="stat-mini-val">{{ clienti|length }}</div>
+      <div class="stat-mini-label">Total clientți</div>
+    </div>
+  </div>
+  <!-- <div class="stat-mini">
+    <div class="stat-mini-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <div>
+      <div class="stat-mini-val">{{ clienti_activi }}</div>
+      <div class="stat-mini-label">Activi</div>
+    </div>
+  </div> -->
+  <!-- <div class="stat-mini">
+    <div class="stat-mini-icon" style="color:#e87d72;background:rgba(192,57,43,0.1);border-color:rgba(192,57,43,0.2);"><i class="fa-solid fa-circle-xmark"></i></div>
+    <div>
+      <div class="stat-mini-val" style="color:#e87d72;">{{ angajati_inactivi }}</div>
+      <div class="stat-mini-label">Inactivi</div>
+    </div>
+  </div> -->
+</div>
+
+<!-- Search -->
+<div class="search-bar">
+  <input class="search-input" type="text" id="searchInput" placeholder="🔍  Caută după nume..."/>
+</div>
+
+<!-- Table -->
+<div class="section-label">Lista cliențilot</div>
+<div class="card">
+  <div class="table-wrap">
+    <table id="clientiTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nume complet</th>
+          <th>Email</th>
+          <th>Telefon</th>
+          <!-- <th>Funcție</th>
+          <th>Departament</th>
+          <th>Data angajare</th>
+          <th>Status</th>
+          <th>Acțiuni</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for client in clienti %}
+        <tr>
+          <td style="color:var(--slate-400); font-size:12px;">{{ forloop.counter }}</td>
+          <td>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:34px;height:34px;border-radius:50%;background:rgba(45,138,45,0.15);border:1px solid rgba(45,138,45,0.3);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--green-mid);flex-shrink:0;">
+                {{ client.prenume|first|upper }}{{ client.nume|first|upper }}
+              </div>
+              <div>
+                <div style="font-weight:600;color:var(--white);">{{ client.prenume }} {{ client.nume }}</div>
+              </div>
+            </div>
+          </td>
+          <td style="color:var(--slate-300);">{{ client.email }}</td>
+          <td style="color:var(--slate-400);">{{ client.telefon|default:"—" }}</td>
+          <!-- <td style="color:var(--slate-200);">{{ angajat.functie }}</td>
+          <td style="color:var(--slate-400);">{{ angajat.departament|default:"—" }}</td>
+          <td style="color:var(--slate-400); font-size:12.5px;">{{ angajat.data_angajare|date:"d M Y" }}</td> -->
+          <!-- <td>
+            {% if angajat.activ %}
+              <span class="badge badge-success">Activ</span>
+            {% else %}
+              <span class="badge badge-danger">Inactiv</span>
+            {% endif %}
+          </td> -->
+          <td>
+            <div style="display:flex;gap:6px;">
+              <a href="{% url 'client_edit' client.pk %}" class="btn btn-outline" style="padding:5px 10px; font-size:12px;">
+                <i class="fa-solid fa-pen"></i>
+              </a>
+              <a href="{% url 'client_delete' client.pk %}" class="btn" style="padding:5px 10px; font-size:12px; background:rgba(192,57,43,0.15); border-color:rgba(192,57,43,0.3); color:#e87d72;">
+                <i class="fa-solid fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" style="text-align:center; padding:40px; color:var(--slate-500);">
+            <i class="fa-solid fa-users" style="font-size:32px; margin-bottom:10px; display:block; color:rgba(45,138,45,0.3);"></i>
+            Nu există clienti înregistrați.
+            <a href="{% url 'client_adauga' %}" style="color:var(--green-light); font-weight:600;">Adaugă primul client →</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#angajatiTable tbody tr').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
+
+{% endblock %}
