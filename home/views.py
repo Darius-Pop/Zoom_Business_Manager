@@ -94,7 +94,7 @@ def home(request):
 # ── Pagini placeholder (completează mai târziu) ────────
 @login_required(login_url='login')
 def angajati(request):
-    return render(request, 'home/homepage.html', {})
+    return render(request, 'angajati/angajati_list.html', {})
 
 @login_required(login_url='login')
 def documente(request):
