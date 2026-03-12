@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}{% if object %}Editează{% else %}Adaugă{% endif %} Document — Zoom Design{% endblock %}
+{% block nav_documente %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .form-page-header { margin-bottom:28px; }
+  .form-page-header h1 { font-family:'Rajdhani',sans-serif; font-size:30px; font-weight:700; color:var(--white); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; }
+  .form-page-header p { font-size:14px; color:var(--slate-400); }
+  .form-card { background:var(--dark-card); border:1px solid rgba(45,138,45,0.2); border-radius:14px; padding:32px; max-width:700px; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .form-grid .full { grid-column:1 / -1; }
+  .form-group { display:flex; flex-direction:column; gap:6px; }
+  .form-label { font-family:'Rajdhani',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--green-mid); }
+  .form-input, .form-select, .form-textarea { background:var(--dark); border:1.5px solid rgba(45,138,45,0.2); border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Mulish',sans-serif; color:var(--white); outline:none; transition:border-color 0.18s, box-shadow 0.18s; }
+  .form-input::placeholder, .form-textarea::placeholder { color:var(--slate-500); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--green-mid); box-shadow:0 0 0 3px rgba(45,138,45,0.13); }
+  .form-select option { background:var(--dark); }
+  .form-textarea { resize:vertical; min-height:90px; }
+  .form-actions { display:flex; gap:12px; margin-top:28px; padding-top:20px; border-top:1px solid rgba(45,138,45,0.15); }
+  @media (max-width:600px) { .form-grid { grid-template-columns:1fr; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-page-header">
+  <h1>
+    {% if object %}<i class="fa-solid fa-pen" style="color:var(--green-mid);"></i> Editează document
+    {% else %}<i class="fa-solid fa-plus" style="color:var(--green-mid);"></i> Adaugă document nou{% endif %}
+  </h1>
+  <p>Completează câmpurile de mai jos și apasă Salvează.</p>
+</div>
+
+<div class="form-card">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">Nume document *</label>
+        <input class="form-input" type="text" name="nume" placeholder="ex: Contract prestări servicii" value="{{ form.nume.value|default:'' }}" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tip document *</label>
+        <select class="form-select" name="tip" required>
+          <option value="">— Selectează tipul —</option>
+          <option value="contract" {% if form.tip.value == 'contract' %}selected{% endif %}>Contract</option>
+          <option value="revizie"  {% if form.tip.value == 'revizie' %}selected{% endif %}>Revizie medicală</option>
+          <option value="autorizatie" {% if form.tip.value == 'autorizatie' %}selected{% endif %}>Autorizație</option>
+          <option value="alt"      {% if form.tip.value == 'alt' %}selected{% endif %}>Altul</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Angajat asociat</label>
+        <select class="form-select" name="angajat">
+          <option value="">— Fără angajat —</option>
+          {% for angajat in form.angajat.field.queryset %}
+          <option value="{{ angajat.pk }}" {% if form.angajat.value == angajat.pk %}selected{% endif %}>
+            {{ angajat.prenume }} {{ angajat.nume }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Data emitere *</label>
+        <input class="form-input" type="date" name="data_emitere" value="{{ form.data_emitere.value|default:'' }}" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Data expirare</label>
+        <input class="form-input" type="date" name="data_expirare" value="{{ form.data_expirare.value|default:'' }}"/>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Fișier atașat</label>
+        <input class="form-input" type="file" name="fisier"/>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Observații</label>
+        <textarea class="form-textarea" name="observatii" placeholder="Note suplimentare...">{{ form.observatii.value|default:'' }}</textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-green">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {% if object %}Salvează modificările{% else %}Adaugă document{% endif %}
+      </button>
+      <a href="{% url 'documente' %}" class="btn btn-outline"><i class="fa-solid fa-xmark"></i> Anulează</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

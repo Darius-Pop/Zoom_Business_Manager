@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Șterge Angajat — Zoom Design{% endblock %}
-{% block nav_angajati %}active{% endblock %}
+{% block title %}Șterge Document — Zoom Design{% endblock %}
+{% block nav_documente %}active{% endblock %}
 
 {% block content %}
 <div style="max-width:500px; margin:60px auto; text-align:center;">
@@ -26,7 +26,7 @@
         <i class="fa-solid fa-trash"></i> Da, șterge
       </button>
     </form>
-    <a href="{% url 'angajati' %}" class="btn btn-outline" style="padding:10px 28px;">
+    <a href="{% url 'documente' %}" class="btn btn-outline" style="padding:10px 28px;">
       <i class="fa-solid fa-xmark"></i> Anulează
     </a>
   </div>

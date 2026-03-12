@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Ofertare — Zoom Design{% endblock %}
+{% block nav_ofertare %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+  .page-header h1 { font-family:'Rajdhani',sans-serif; font-size:32px; font-weight:700; color:var(--white); text-transform:uppercase; letter-spacing:0.04em; }
+  .page-header h1 span { color:var(--green-light); }
+  .section-label { font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--green-mid); margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+  .section-label::after { content:''; flex:1; height:1px; background:rgba(45,138,45,0.2); }
+  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px; }
+  .stat-mini { background:var(--dark-card); border:1px solid rgba(45,138,45,0.2); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:14px; }
+  .stat-mini-icon { width:40px; height:40px; border-radius:8px; background:rgba(45,138,45,0.1); border:1px solid rgba(45,138,45,0.2); display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--green-mid); flex-shrink:0; }
+  .stat-mini-val { font-family:'Rajdhani',sans-serif; font-size:26px; font-weight:700; color:var(--white); line-height:1; }
+  .stat-mini-label { font-size:12px; color:var(--slate-400); margin-top:2px; }
+  .search-input { width:100%; background:var(--dark-card); border:1.5px solid rgba(45,138,45,0.2); border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Mulish',sans-serif; color:var(--white); outline:none; margin-bottom:16px; transition:border-color 0.18s; }
+  .search-input::placeholder { color:var(--slate-500); }
+  .search-input:focus { border-color:var(--green-mid); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Ofertare <span>({{ oferte|length }})</span></h1>
+  <a href="{% url 'oferta_adauga' %}" class="btn btn-green"><i class="fa-solid fa-plus"></i> Adaugă ofertă</a>
+</div>
+
+<div class="stats-row">
+  <div class="stat-mini">
+    <div class="stat-mini-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+    <div><div class="stat-mini-val">{{ oferte|length }}</div><div class="stat-mini-label">Total oferte</div></div>
+  </div>
+  <div class="stat-mini">
+    <div class="stat-mini-icon" style="color:var(--slate-300);"><i class="fa-solid fa-pen-to-square"></i></div>
+    <div><div class="stat-mini-val">{{ oferte_draft }}</div><div class="stat-mini-label">Draft</div></div>
+  </div>
+  <div class="stat-mini">
+    <div class="stat-mini-icon" style="color:#6dd96d;"><i class="fa-solid fa-circle-check"></i></div>
+    <div><div class="stat-mini-val" style="color:#6dd96d;">{{ oferte_acceptate }}</div><div class="stat-mini-label">Acceptate</div></div>
+  </div>
+  <div class="stat-mini">
+    <div class="stat-mini-icon" style="color:#e87d72;background:rgba(192,57,43,0.1);border-color:rgba(192,57,43,0.2);"><i class="fa-solid fa-circle-xmark"></i></div>
+    <div><div class="stat-mini-val" style="color:#e87d72;">{{ oferte_refuzate }}</div><div class="stat-mini-label">Refuzate</div></div>
+  </div>
+</div>
+
+<input class="search-input" type="text" id="searchInput" placeholder="🔍  Caută după număr, client, status..."/>
+
+<div class="section-label">Lista ofertelor</div>
+<div class="card">
+  <div class="table-wrap">
+    <table id="ofertareTable">
+      <thead>
+        <tr>
+          <th>#</th><th>Nr. ofertă</th><th>Client</th><th>Status</th><th>Data ofertă</th><th>Valabilă până</th><th>Valoare</th><th>Acțiuni</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for oferta in oferte %}
+        <tr>
+          <td style="color:var(--slate-400);font-size:12px;">{{ forloop.counter }}</td>
+          <td><span style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--green-light);">{{ oferta.numar }}</span></td>
+          <td style="color:var(--white);font-weight:600;">{{ oferta.client }}</td>
+          <td>
+            {% if oferta.status == 'draft' %}<span class="badge badge-info">Draft</span>
+            {% elif oferta.status == 'trimisa' %}<span class="badge badge-warning">Trimisă</span>
+            {% elif oferta.status == 'acceptata' %}<span class="badge badge-success">Acceptată</span>
+            {% else %}<span class="badge badge-danger">Refuzată</span>{% endif %}
+          </td>
+          <td style="color:var(--slate-400);font-size:12.5px;">{{ oferta.data_oferta|date:"d M Y" }}</td>
+          <td style="color:var(--slate-400);font-size:12.5px;">{{ oferta.valabila_pana|date:"d M Y"|default:"—" }}</td>
+          <td style="color:var(--green-light);font-family:'Rajdhani',sans-serif;font-weight:700;">{{ oferta.valoare }} RON</td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <a href="{% url 'oferta_edit' oferta.pk %}" class="btn btn-outline" style="padding:5px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></a>
+              <a href="{% url 'oferta_delete' oferta.pk %}" class="btn" style="padding:5px 10px;font-size:12px;background:rgba(192,57,43,0.15);border-color:rgba(192,57,43,0.3);color:#e87d72;"><i class="fa-solid fa-trash"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" style="text-align:center;padding:40px;color:var(--slate-500);">
+            <i class="fa-solid fa-file-invoice-dollar" style="font-size:32px;margin-bottom:10px;display:block;color:rgba(45,138,45,0.3);"></i>
+            Nu există oferte înregistrate.
+            <a href="{% url 'oferta_adauga' %}" style="color:var(--green-light);font-weight:600;">Adaugă prima ofertă →</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#ofertareTable tbody tr').forEach(r => r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none');
+  });
+</script>
+{% endblock %}

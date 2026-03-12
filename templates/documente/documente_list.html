@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Documente — Zoom Design{% endblock %}
+{% block nav_documente %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+  .page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+  .page-header h1 { font-family:'Rajdhani',sans-serif; font-size:32px; font-weight:700; color:var(--white); text-transform:uppercase; letter-spacing:0.04em; }
+  .page-header h1 span { color:var(--green-light); }
+  .section-label { font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--green-mid); margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+  .section-label::after { content:''; flex:1; height:1px; background:rgba(45,138,45,0.2); }
+  .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:28px; }
+  .stat-mini { background:var(--dark-card); border:1px solid rgba(45,138,45,0.2); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:14px; }
+  .stat-mini-icon { width:40px; height:40px; border-radius:8px; background:rgba(45,138,45,0.1); border:1px solid rgba(45,138,45,0.2); display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--green-mid); flex-shrink:0; }
+  .stat-mini-val { font-family:'Rajdhani',sans-serif; font-size:26px; font-weight:700; color:var(--white); line-height:1; }
+  .stat-mini-label { font-size:12px; color:var(--slate-400); margin-top:2px; }
+  .search-input { width:100%; background:var(--dark-card); border:1.5px solid rgba(45,138,45,0.2); border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Mulish',sans-serif; color:var(--white); outline:none; margin-bottom:16px; transition:border-color 0.18s; }
+  .search-input::placeholder { color:var(--slate-500); }
+  .search-input:focus { border-color:var(--green-mid); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Documente <span>({{ documente|length }})</span></h1>
+  <a href="{% url 'document_adauga' %}" class="btn btn-green"><i class="fa-solid fa-plus"></i> Adaugă document</a>
+</div>
+
+<div class="stats-row">
+  <div class="stat-mini">
+    <div class="stat-mini-icon"><i class="fa-solid fa-file-lines"></i></div>
+    <div><div class="stat-mini-val">{{ documente|length }}</div><div class="stat-mini-label">Total documente</div></div>
+  </div>
+  <div class="stat-mini">
+    <div class="stat-mini-icon" style="color:#e8a84a;background:rgba(200,130,10,0.1);border-color:rgba(200,130,10,0.2);"><i class="fa-solid fa-clock"></i></div>
+    <div><div class="stat-mini-val" style="color:#e8a84a;">{{ documente_expira }}</div><div class="stat-mini-label">Expiră în 30 zile</div></div>
+  </div>
+  <div class="stat-mini">
+    <div class="stat-mini-icon" style="color:#e87d72;background:rgba(192,57,43,0.1);border-color:rgba(192,57,43,0.2);"><i class="fa-solid fa-circle-exclamation"></i></div>
+    <div><div class="stat-mini-val" style="color:#e87d72;">{{ documente_expirate }}</div><div class="stat-mini-label">Expirate</div></div>
+  </div>
+</div>
+
+<input class="search-input" type="text" id="searchInput" placeholder="🔍  Caută după nume, tip, angajat..."/>
+
+<div class="section-label">Lista documentelor</div>
+<div class="card">
+  <div class="table-wrap">
+    <table id="documenteTable">
+      <thead>
+        <tr>
+          <th>#</th><th>Nume document</th><th>Tip</th><th>Angajat</th><th>Data emitere</th><th>Data expirare</th><th>Acțiuni</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for doc in documente %}
+        <tr>
+          <td style="color:var(--slate-400);font-size:12px;">{{ forloop.counter }}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:34px;height:34px;border-radius:8px;background:rgba(45,138,45,0.1);border:1px solid rgba(45,138,45,0.2);display:flex;align-items:center;justify-content:center;color:var(--green-mid);font-size:14px;">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+              <span style="font-weight:600;color:var(--white);">{{ doc.nume }}</span>
+            </div>
+          </td>
+          <td><span class="badge badge-info">{{ doc.get_tip_display }}</span></td>
+          <td style="color:var(--slate-300);">{{ doc.angajat|default:"—" }}</td>
+          <td style="color:var(--slate-400);font-size:12.5px;">{{ doc.data_emitere|date:"d M Y"|default:"—" }}</td>
+          <td>
+            {% if doc.data_expirare %}
+              <span style="font-size:12.5px;color:var(--slate-300);">{{ doc.data_expirare|date:"d M Y" }}</span>
+            {% else %}—{% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <a href="{% url 'document_edit' doc.pk %}" class="btn btn-outline" style="padding:5px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></a>
+              <a href="{% url 'document_delete' doc.pk %}" class="btn" style="padding:5px 10px;font-size:12px;background:rgba(192,57,43,0.15);border-color:rgba(192,57,43,0.3);color:#e87d72;"><i class="fa-solid fa-trash"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" style="text-align:center;padding:40px;color:var(--slate-500);">
+            <i class="fa-solid fa-file-lines" style="font-size:32px;margin-bottom:10px;display:block;color:rgba(45,138,45,0.3);"></i>
+            Nu există documente înregistrate.
+            <a href="{% url 'document_adauga' %}" style="color:var(--green-light);font-weight:600;">Adaugă primul document →</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#documenteTable tbody tr').forEach(r => r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none');
+  });
+</script>
+{% endblock %}
