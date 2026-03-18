@@ -243,7 +243,8 @@
       </div>
       <div class="form-row-meta">
         <label class="remember-label"><input type="checkbox" name="remember"/> Ține-mă minte</label>
-        <a href="#" class="forgot-link">Ai uitat parola?</a>
+        <a href="{% url 'password_reset' %}" class="forgot-link">Ai uitat parola?</a>
+
       </div>
       <button type="submit" class="btn-submit"><i class="fa-solid fa-right-to-bracket"></i> Intră în cont</button>
     </form>

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/',      admin.site.urls),
@@ -27,5 +28,12 @@ urlpatterns = [
     path('clienti/',    include('clienti.urls')),
     path('comenzi/',    include('comenzi.urls')),
     path('ofertare/',   include('ofertare.urls')),
+
+    path('reset-parola/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('reset-parola/trimis/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset-parola/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+    success_url='/login/'
+), name='password_reset_confirm'),
+    path('reset-parola/finalizat/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
