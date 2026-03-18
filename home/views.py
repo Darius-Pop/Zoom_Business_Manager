@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
 
 
 # ── Autentificare ──────────────────────────────────────
@@ -78,36 +80,35 @@ def logout_view(request):
 # ── Homepage ───────────────────────────────────────────
 @login_required(login_url='login')
 def home(request):
+    from angajati.models import Angajat
+    from documente.models import Document
+    from clienti.models import Client
+    from comenzi.models import Comanda
+    from ofertare.models import Oferta
+
+    azi = timezone.now().date()
+    peste_30_zile = azi + timedelta(days=30)
+
+    # Documente expirate deja SAU care expira in urmatoarele 30 zile
+    documente_expirare = Document.objects.filter(
+        data_expirare__lte=peste_30_zile
+    ).order_by('data_expirare')
+
+    # Comenzi cu livrare in curand (doar cele nefinalizate)
+    comenzi_livrare = Comanda.objects.filter(
+        data_livrare__lte=peste_30_zile,
+        data_livrare__gte=azi,
+        status__in=['noua', 'in_lucru']
+    ).order_by('data_livrare')
+
     context = {
-        # Conectează modele reale când le creezi:
-        # 'total_angajati':  Angajat.objects.count(),
-        # 'total_documente': Document.objects.count(),
-        # 'total_clienti':   Client.objects.count(),
-        # 'total_comenzi':   Comanda.objects.filter(status='activa').count(),
-        # 'total_oferte':    Oferta.objects.count(),
-        # 'documente_expirare': Document.objects.filter(data_expirare__lte=today+30days),
-        # 'comenzi_livrare':    Comanda.objects.filter(data_livrare__lte=today+14days),
+        'total_angajati':     Angajat.objects.count(),
+        'total_documente':    Document.objects.count(),
+        'total_clienti':      Client.objects.filter(activ=True).count(),
+        'total_comenzi':      Comanda.objects.filter(status__in=['noua', 'in_lucru']).count(),
+        'total_oferte':       Oferta.objects.count(),
+        'documente_expirare': documente_expirare,
+        'comenzi_livrare':    comenzi_livrare,
+        'notificari_urgente': [],
     }
     return render(request, 'home/homepage.html', context)
-
-
-# ── Pagini placeholder (completează mai târziu) ────────
-@login_required(login_url='login')
-def angajati(request):
-    return render(request, 'angajati/angajati_list.html', {})
-
-@login_required(login_url='login')
-def documente(request):
-    return render(request, 'home/homepage.html', {})
-
-@login_required(login_url='login')
-def clienti(request):
-    return render(request, 'home/homepage.html', {})
-
-@login_required(login_url='login')
-def comenzi(request):
-    return render(request, 'home/homepage.html', {})
-
-@login_required(login_url='login')
-def ofertare(request):
-    return render(request, 'home/homepage.html', {})

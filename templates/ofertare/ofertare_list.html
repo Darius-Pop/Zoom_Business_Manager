@@ -60,21 +60,47 @@
         {% for oferta in oferte %}
         <tr>
           <td style="color:var(--slate-400);font-size:12px;">{{ forloop.counter }}</td>
+          
           <td><span style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--green-light);">{{ oferta.numar }}</span></td>
+          
           <td style="color:var(--white);font-weight:600;">{{ oferta.client }}</td>
+          
           <td>
             {% if oferta.status == 'draft' %}<span class="badge badge-info">Draft</span>
             {% elif oferta.status == 'trimisa' %}<span class="badge badge-warning">Trimisă</span>
             {% elif oferta.status == 'acceptata' %}<span class="badge badge-success">Acceptată</span>
             {% else %}<span class="badge badge-danger">Refuzată</span>{% endif %}
           </td>
+          
           <td style="color:var(--slate-400);font-size:12.5px;">{{ oferta.data_oferta|date:"d M Y" }}</td>
+          
           <td style="color:var(--slate-400);font-size:12.5px;">{{ oferta.valabila_pana|date:"d M Y"|default:"—" }}</td>
+          
           <td style="color:var(--green-light);font-family:'Rajdhani',sans-serif;font-weight:700;">{{ oferta.valoare }} RON</td>
+          
           <td>
-            <div style="display:flex;gap:6px;">
-              <a href="{% url 'oferta_edit' oferta.pk %}" class="btn btn-outline" style="padding:5px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></a>
-              <a href="{% url 'oferta_delete' oferta.pk %}" class="btn" style="padding:5px 10px;font-size:12px;background:rgba(192,57,43,0.15);border-color:rgba(192,57,43,0.3);color:#e87d72;"><i class="fa-solid fa-trash"></i></a>
+            <div style="display:flex; gap:6px; align-items: center;">
+              <a href="{% url 'trimite_oferta_email' oferta.pk %}" 
+                 class="btn btn-outline" 
+                 style="padding:5px 10px; font-size:12px; border-color:rgba(52,152,219,0.3); color:#3498db; background:rgba(52,152,219,0.1);"
+                 title="Trimite pe email"
+                 onclick="return confirm('Ești sigur că vrei să trimiți oferta {{ oferta.numar }} către {{ oferta.client.email }}?')">
+                <i class="fa-solid fa-paper-plane"></i>
+              </a>
+
+              <a href="{% url 'oferta_edit' oferta.pk %}" 
+                 class="btn btn-outline" 
+                 style="padding:5px 10px; font-size:12px;" 
+                 title="Editează">
+                <i class="fa-solid fa-pen"></i>
+              </a>
+              
+              <a href="{% url 'oferta_delete' oferta.pk %}" 
+                 class="btn" 
+                 style="padding:5px 10px; font-size:12px; background:rgba(192,57,43,0.15); border-color:rgba(192,57,43,0.3); color:#e87d72;" 
+                 title="Șterge">
+                <i class="fa-solid fa-trash"></i>
+              </a>
             </div>
           </td>
         </tr>
